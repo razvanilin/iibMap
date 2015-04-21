@@ -1,0 +1,7 @@
+client/.sass-cache
+client/.tmp
+client/bower_components
+client/node_modules
+server/node_modules
+iibHeatMapApp.sublime-project
+iibHeatMapApp.sublime-workspace

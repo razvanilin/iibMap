@@ -1,0 +1,185 @@
+{
+ "name": "IIB",
+ "children": [
+  {
+   "id": "broker1",
+   "name": "Broker-Shire",
+   "children": [
+    {
+     "id": "eg1",
+     "name": "cluster",
+     "children": [
+      {"id": "flow1", "name": "AgglomerativeCluster", "size": 3938},
+      {"id": "flow2", "name": "CommunityStructure", "size": 3812},
+      {"id": "flow3", "name": "HierarchicalCluster", "size": 6714},
+      {"id": "flow4", "name": "MergeEdge", "size": 743}
+     ]
+    },
+    {
+     "id": "eg2", 
+     "name": "graph",
+     "children": [
+      {"id": "flow1", "name": "BetweennessCentrality", "size": 3534},
+      {"id": "flow2", "name": "LinkDistance", "size": 5731},
+      {"id": "flow3", "name": "MaxFlowMinCut", "size": 7840},
+      {"id": "flow4", "name": "ShortestPaths", "size": 5914},
+      {"id": "flow5", "name": "SpanningTree", "size": 3416}
+     ]
+    },
+    {
+     "id": "eg3",
+     "name": "optimization",
+     "children": [
+      {"id": "flow1", "name": "AspectRatioBanker", "size": 7074}
+     ]
+    }
+   ]
+  },
+  {
+   "id": "broker2",
+   "name": "Broker-Gondolin",
+   "children": [
+    {
+     "id": "eg4",
+     "name": "interpolate",
+     "children": [
+      {"id": "flow1", "name": "ArrayInterpolator", "size": 1983},
+      {"id": "flow2", "name": "ColorInterpolator", "size": 2047},
+      {"id": "flow3", "name": "DateInterpolator", "size": 1375},
+      {"id": "flow4", "name": "Interpolator", "size": 8746},
+      {"id": "flow5", "name": "MatrixInterpolator", "size": 2202},
+      {"id": "flow6", "name": "NumberInterpolator", "size": 1382},
+      {"id": "flow7", "name": "ObjectInterpolator", "size": 1629},
+      {"id": "flow8", "name": "PointInterpolator", "size": 1675},
+      {"id": "flow9", "name": "RectangleInterpolator", "size": 2042}
+     ]
+    },
+    {
+     "id": "eg5", 
+     "name": "Transit",
+     "children": [
+      {"id": "flow1", "name": "ISchedulable", "size": 1041},
+      {"id": "flow2", "name": "Parallel", "size": 5176},
+      {"id": "flow3", "name": "Pause", "size": 449},
+      {"id": "flow4", "name": "Scheduler", "size": 5593},
+      {"id": "flow5", "name": "Sequence", "size": 5534},
+      {"id": "flow6", "name": "Transition", "size": 9201},
+      {"id": "flow7", "name": "Transitioner", "size": 19975},
+      {"id": "flow8", "name": "TransitionEvent", "size": 1116},
+      {"id": "flow9", "name": "Tween", "size": 6006}
+     ]
+    }
+   ]
+  },
+  {
+   "id": "broker3",  
+   "name": "Broker-Doriath",
+   "children": [
+    {
+     "id": "eg6",  
+     "name": "heap",
+     "children": [
+      {"id": "flow1", "name": "FibonacciHeap", "size": 9354},
+      {"id": "flow2", "name": "HeapNode", "size": 1233}
+     ]
+    },
+    {
+     "id": "eg14",
+     "name": "math",
+     "children": [
+      {"id": "flow1", "name": "DenseMatrix", "size": 3165},
+      {"id": "flow2", "name": "IMatrix", "size": 2815},
+      {"id": "flow3", "name": "SparseMatrix", "size": 3366}
+     ]
+    },
+    {
+     "id": "eg7",  
+     "name": "palette",
+     "children": [
+      {"id": "flow1", "name": "ColorPalette", "size": 6367},
+      {"id": "flow2", "name": "Palette", "size": 1229},
+      {"id": "flow3", "name": "ShapePalette", "size": 2059},
+      {"id": "flow4", "name": "SizePalette", "size": 2291}
+     ]
+    }
+   ]
+  },
+  {
+   "id": "broker4", 
+   "name": "Broker-Rivendell",
+   "children": [
+    {
+     "id": "eg8",  
+     "name": "axis",
+     "children": [
+      {"id": "flow1", "name": "Axes", "size": 1302},
+      {"id": "flow2", "name": "Axis", "size": 24593},
+      {"id": "flow3", "name": "AxisGridLine", "size": 652},
+      {"id": "flow4", "name": "AxisLabel", "size": 636},
+      {"id": "flow5", "name": "CartesianAxes", "size": 6703}
+     ]
+    },
+    {
+     "id": "eg9",  
+     "name": "controls",
+     "children": [
+      {"id": "flow1", "name": "AnchorControl", "size": 2138},
+      {"id": "flow2", "name": "ClickControl", "size": 3824},
+      {"id": "flow3", "name": "Control", "size": 1353},
+      {"id": "flow4", "name": "ControlList", "size": 4665},
+      {"id": "flow5", "name": "DragControl", "size": 2649},
+      {"id": "flow6", "name": "ExpandControl", "size": 2832},
+      {"id": "flow7", "name": "HoverControl", "size": 4896},
+      {"id": "flow8", "name": "IControl", "size": 763},
+      {"id": "flow9", "name": "PanZoomControl", "size": 5222}
+     ]
+    },
+    {
+     "id": "eg10",  
+     "name": "data",
+     "children": [
+      {"id": "flow1", "name": "Data", "size": 20544},
+      {"id": "flow2", "name": "DataList", "size": 19788},
+      {"id": "flow3", "name": "DataSprite", "size": 10349},
+      {"id": "flow4", "name": "EdgeSprite", "size": 3301},
+      {"id": "flow5", "name": "NodeSprite", "size": 19382},
+      {"id": "flow6", "name": "ScaleBinding", "size": 11275},
+      {"id": "flow7", "name": "Tree", "size": 7147},
+      {"id": "flow8", "name": "TreeBuilder", "size": 9930}
+     ]
+    },
+    {
+     "id": "eg11",  
+     "name": "events",
+     "children": [
+      {"id": "flow1", "name": "DataEvent", "size": 2313},
+      {"id": "flow2", "name": "SelectionEvent", "size": 1880},
+      {"id": "flow3", "name": "TooltipEvent", "size": 1701},
+      {"id": "flow4", "name": "VisualizationEvent", "size": 1117}
+     ]
+    },
+    {
+     "id": "eg12",  
+     "name": "legend",
+     "children": [
+      {"id": "flow1", "name": "Legend", "size": 20859},
+      {"id": "flow2", "name": "LegendItem", "size": 4614},
+      {"id": "flow3", "name": "LegendRange", "size": 10530}
+     ]
+    },
+    {
+     "id": "eg13",  
+     "name": "operator",
+     "children": [
+      {"id": "flow1", "name": "IOperator", "size": 1286},
+      {"id": "flow2", "name": "Operator", "size": 2490},
+      {"id": "flow3", "name": "OperatorList", "size": 5248},
+      {"id": "flow4", "name": "OperatorSequence", "size": 4190},
+      {"id": "flow5", "name": "OperatorSwitch", "size": 2581},
+      {"id": "flow6", "name": "SortOperator", "size": 2023}
+     ]
+    }
+   ]
+  }
+ ]
+}

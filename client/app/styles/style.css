@@ -1,0 +1,306 @@
+@import url(http://fonts.googleapis.com/css?family=Dosis:500);
+
+body {
+	background: #000021;
+	font: normal 18px Dosis; color: white; text-align: center;
+}
+
+h3 {
+  margin-top: 10px;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+.row {
+  padding-top: 20px;
+}
+
+.node, span.chart-switcher {
+  cursor: pointer;
+}
+
+.node:hover {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: white;
+  stroke-width: 1.5px;
+}
+
+.node--leaf {
+  fill: white;
+}
+
+.label {
+  /*font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+}
+
+.sun-label {
+  font-size: 13px;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+
+}
+
+.tilford-label {
+  font-size: 13px;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+}
+
+.label,
+/*.node--root*/
+/*.node--leaf*/ {
+  pointer-events: none;
+}
+
+.toolbar.deactivate {
+  opacity: 0;
+  transform: rotateX(90deg);
+  transition: transform 0.5s ease;
+}
+
+.toolbar.active {
+  opacity: 1;
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 20px;
+  transform: rotateX(0deg);
+  transition: all 0.5s ease;
+}
+
+.details {
+  display: none;
+  border-radius: 20px;
+  max-height:70%;
+  background-color: #454F6F; 
+  padding: 20px;
+}
+
+.details p {
+  text-align: left;
+}
+.details span {
+  position: absolute;
+  left: 80%;
+}
+
+.details.active {
+  opacity: 1;
+  transition: opacity 1s ease;
+  display: inline-block;
+  -webkit-animation: phase 0.5s;
+  animation: phase 0.5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.details.deactivate {
+  opacity: 0;
+  transition: opacity 1s ease;
+  display: inline-block;
+  -webkit-animation: phase-out 0.5s;
+  -moz-animation: phase-out 0.5s;
+  animation: phase-out 0.5s;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+path {
+  fill-rule: evenodd;
+}
+
+.welcome-message.active {
+  opacity: 1;
+  height: 50px;
+  transition: all 1s ease;
+}
+
+.welcome-message.deactivate {
+  opacity: 0;
+  height:0px;
+  transition: all 1s ease;
+}
+
+.chart-area {
+  opacity: 0;
+  transform: scale(0);
+  transition: all 1s each;
+}
+
+.chart-area.active {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 3s ease;
+}
+
+.chart-area.deactivate {
+  opacity: 0;
+  transform: scale(0);
+  transition: all 1s each;
+}
+
+/*.chart-switcher: {
+  animation: rotate-switcher 1s ease;
+  -webkit-animation: rotate-switcher 1s ease;
+  -moz-animation: rotate-switcher 1s ease;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}*/
+
+/* Navbar Theme */
+
+.navbar-default {
+  background-color: #6f799b;
+  border-color: #1d2946;
+}
+
+.nav li > a, .nav li.active {
+  border-color: transparent;
+}
+
+.navbar-default select {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar-default .navbar-brand {
+  color: #d9d9d9;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-text {
+  color: #d9d9d9;
+}
+.navbar-default .navbar-nav > li > a, .nav a{
+  color: #d9d9d9;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu {
+  background-color: #6f799b;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+  color: #d9d9d9;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus, .nav li.active {
+  color: #ffffff;
+  background-color: #1d2946 !important;
+  background-image: none;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+  background-color: #6f799b;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus, .nav li.active {
+  color: #ffffff;
+  background-color: #1d2946 !important;
+  background-image: none;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus, .nav li.active {
+  color: #ffffff;
+  background-color: #1d2946;
+  background-image: none; 
+}
+.navbar-default .navbar-toggle, .nav li.active {
+  border-color: #1d2946;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus, .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  background-color: #1d2946;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #d9d9d9;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #d9d9d9;
+}
+.navbar-default .navbar-link {
+  color: #d9d9d9;
+}
+.navbar-default .navbar-link:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #d9d9d9;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background-color: #1d2946 !important;
+  }
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  border: none;
+  color: white;
+}
+
+.nav-tabs>li>a:hover {
+  background-color: transparent;
+  color: white;
+}
+
+@-webkit-keyframes phase {
+  0% {transform: scale(0.1);}
+  100% {transform: scale(1);}
+}
+@-moz-keyframes phase {
+  0% {transform: scale(0.1);}
+  100% {transform: scale(1);}
+}
+@keyframes phase {
+  0% {transform: scale(0.1);}
+  100% {transform: scale(1);}
+}
+
+
+@-webkit-keyframes phase-out {
+  0% {transform: scale(1);}
+  100% {transform: scale(0);}
+}
+@-moz-keyframes phase-out {
+  0% {transform: scale(1);}
+  100% {transform: scale(0);}
+}
+@keyframes phase-out {
+  0% {transform: scale(1);}
+  100% {transform: scale(0);}
+}
+
+/* rotate the switcher when changing charts */
+@keyframes rotate-switcher {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
+@-webkit-keyframes rotate-switcher {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
+@-moz-keyframes rotate-switcher {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
+
+/* animate the details div when something in the chart is clicked */
+@keyframes chart-clicked {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.1);}
+    100% {transform: scale(1);}
+}
