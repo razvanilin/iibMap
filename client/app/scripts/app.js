@@ -14,6 +14,9 @@ angular
     'ngRoute',
     'restangular'
   ])
+  .constant("CONFIG", {
+    "API_HOST": "http://localhost:3000"
+  })
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
