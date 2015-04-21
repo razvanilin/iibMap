@@ -74,8 +74,8 @@
               </div>
             </div>
 
-            <div class="details" style="width:90%;">
-              <ul id="details" class="nav nav-tabs nav-justified">
+            <div class="details" style="width:90%;" ng-controller="TabsDetailsCtrl">
+              <!--ul id="details" class="nav nav-tabs nav-justified">
                 <li role="presentation" class="active"><a href="#/#resources" aria-controls="resources" role="tab" data-toggle="tab">Resources</a></li>
                 <li role="presentation" ><a ng-href="#/#details1" aria-controls="details1" role="tab" data-toggle="tab">Details1</a></li>
                 <li role="presentation" ><a ng-href="#/#details2" aria-controls="details2" role="tab" data-toggle="tab">Details2</a></li>
@@ -85,7 +85,12 @@
                   <div role="tabpanel" class="tab-pane fade" id="details1"><h2>Details 1</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
                   <div role="tabpanel" class="tab-pane fade" id="details2"><h2>Details 2</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
                 </div>
-              </ul>
+              </ul-->
+              <tabset id="details" justified="true">
+                <tab id="resources" heading="Resources"></tab>
+                <tab id="details1" heading="Details 1"><h2>Details 1</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></tab>
+                <tab id="details2" heading="Details 2"><h2>Details 2</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></tab>
+              </tabset>
             </div>
           </div>
         </div>

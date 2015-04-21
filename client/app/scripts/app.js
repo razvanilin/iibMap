@@ -12,7 +12,8 @@ angular
   .module('iibHeatMapApp', [
     'ngResource',
     'ngRoute',
-    'restangular'
+    'restangular',
+    'ui.bootstrap'
   ])
   .constant("CONFIG", {
     "API_HOST": "http://localhost:3000"

@@ -22,20 +22,20 @@
       $("svg circle, svg path").click(function() {
           var circle = $(this);
           currentFocus = circle;
-          $("div#resources").find("p, h2").remove();
+          $("div#details div.tab-pane:first-child").find("p, h2").remove();
           if (circle.attr('class') != "node node--root")
-              $("div#resources").append("<h2>" + circle.attr("value") + "<span></span></h2>");
+              $("div#details div.tab-pane:first-child").append("<h2>" + circle.attr("value") + "<span></span></h2>");
           else
-              $("div#resources").append("<h2></h2>");
+              $("div#details div.tab-pane:first-child").append("<h2></h2>");
 
 
           //if (circle.attr('parent'))
           $(chartType + "[parent='" + circle.attr('id') + "']").each(function() {
-              $("div#resources").append("<p>" + $(this).attr('value') + "<span id='" + $(this).attr('id') + "'></span></p>");
+              $("div#details div.tab-pane:first-child").append("<p>" + $(this).attr('value') + "<span id='" + $(this).attr('id') + "'></span></p>");
           });
 
           if (circle.attr('class') == "node node--leaf") {
-              $("div#resources").find("h2").attr('id', $(this).attr('id'));
+              $("div#details div.tab-pane:first-child").find("h2").attr('id', $(this).attr('id'));
           }
 
           if (!$("div.details").hasClass("active")) {
