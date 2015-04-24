@@ -16,9 +16,10 @@ angular
     'ui.bootstrap'
   ])
   .constant("CONFIG", {
-    "API_HOST": "http://localhost:3000"
+    "API_HOST": "http://localhost:8080"
   })
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, RestangularProvider, CONFIG) {
+    RestangularProvider.setBaseUrl(CONFIG.API_HOST);
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -31,4 +32,14 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .factory('BrokerRestangular', function(Restangular) {
+    return Restangular.withConfig(function(RestangularConfigurer) {
+      RestangularConfigurer.setRestangularFields({
+        id: '_id'
+      });
+    });
+  })
+  .factory('Broker', function(BrokerRestangular) {
+    return BrokerRestangular.service('broker');
   });

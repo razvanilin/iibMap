@@ -65,7 +65,7 @@ function drawCircle() {
     console.log(svg.attr('id'));
 
     d3.json('http://localhost:8080/broker/getJson', function(error, root) {
-        //console.log(root);
+        console.log(root);
         if (error) return console.error(error);
 
         // check if there was an error response from the server
@@ -94,6 +94,9 @@ function drawCircle() {
             })
             .attr("parent", function(d) {
                 if (d.parent) return d.parent['id']
+            })
+            .attr("ng-click", function(d) {
+                return "getEgs('"+d.id+"')";
             })
 
         .style({
