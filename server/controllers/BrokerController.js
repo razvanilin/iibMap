@@ -95,7 +95,7 @@ module.exports = function(app, route) {
                 // Go through all the execution groups 
                 for (var j = 0; j < responseString['executionGroups']['executionGroup'].length; j++) {
                     var tempData = {
-                        'id': 'eg',
+                        'id': 'eg'+Math.floor((Math.random() * 1000) + 1),
                         'type': responseString['executionGroups']['type'],
                         'name': responseString['executionGroups']['executionGroup'][j]['name'],
                         'children': []
@@ -103,7 +103,7 @@ module.exports = function(app, route) {
                     var chartIndex = 1;
                     for (var i = 0; i < responseString['executionGroups']['executionGroup'][j]['messageFlows']['messageFlow'].length; i++) {
                         var messageFlow = {
-                            "id": "flow" + chartIndex,
+                            "id": "flow" + Math.floor((Math.random() * 1000) + 1),
                             "type": responseString['executionGroups']['executionGroup'][j]['messageFlows']['type'],
                             "name": responseString['executionGroups']['executionGroup'][j]['messageFlows']['messageFlow'][i]['name'],
                             "size": Math.floor((Math.random() * 5000) + 100)

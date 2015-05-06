@@ -45,15 +45,20 @@
                 <li id="admin-mem"><a href="#/">Memory Monitor</a></li>
               </ul>
             </li>
-            <li><a href="#/"><img ng-click="getEgs('5530d8571fbc4b1c4ce37ed4')" src="/images/ibm-logo-white.gif"/ style="width:54px;height:20px;"></a></li>
+            <li><a href="#/" ng-controller="egCtrl"><img ng-click="getEgs('5530d8571fbc4b1c4ce37ed4')" src="/images/ibm-logo-white.gif"/ style="width:54px;height:20px;"><span> {{ egs[0].UUID }}</span></a></li>
           </ul>
         </div>
       </div>
     </nav>
 
+
+
     <div id="content" class="container-fluid" style="margin-top:50px;">
-      <div class="row">
-        <div class="col-md-7" id="chart-content" ng-controller="egCtrl"></div>
+      <div class="row" ng-controller="egCtrl">
+        <div class="col-md-7" id="chart-content" circle-chart datajson="'http://localhost:8080/broker/getJson'">
+          
+        </div>
+
 
         <div class="col-md-5">
           <div class="row">
@@ -74,29 +79,25 @@
               </div>
             </div>
 
-            <div class="details" style="width:90%;" ng-controller="TabsDetailsCtrl">
-              <!--ul id="details" class="nav nav-tabs nav-justified">
-                <li role="presentation" class="active"><a href="#/#resources" aria-controls="resources" role="tab" data-toggle="tab">Resources</a></li>
-                <li role="presentation" ><a ng-href="#/#details1" aria-controls="details1" role="tab" data-toggle="tab">Details1</a></li>
-                <li role="presentation" ><a ng-href="#/#details2" aria-controls="details2" role="tab" data-toggle="tab">Details2</a></li>
+            <div class="details active" style="width:90%;">
+              <ul id="details" class="nav nav-tabs nav-justified">
+                <li role="presentation" class="active"><a data-target="#resources" aria-controls="resources" role="tab" data-toggle="tab">Resources</a></li>
+                <li role="presentation" ><a data-target="#details1" aria-controls="details1" role="tab" data-toggle="tab">Details1</a></li>
+                <li role="presentation" ><a data-target="#details2" aria-controls="details2" role="tab" data-toggle="tab">Details2</a></li>
 
                 <div class="tab-content">
-                  <div role="tabpanel" class="tab-pane fade in active" id="resources"></div>
+                  <div role="tabpanel" class="tab-pane fade in active" id="resources">
+                    <p ng-repeat="eg in egs">{{eg.name}}</p>
+                  </div>
                   <div role="tabpanel" class="tab-pane fade" id="details1"><h2>Details 1</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
                   <div role="tabpanel" class="tab-pane fade" id="details2"><h2>Details 2</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
                 </div>
-              </ul-->
-              <tabset id="details" justified="true">
-                <tab id="resources" heading="Resources"></tab>
-                <tab id="details1" heading="Details 1"><h2>Details 1</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></tab>
-                <tab id="details2" heading="Details 2"><h2>Details 2</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></tab>
-              </tabset>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    
-    <script src="scripts/javascripts/d3Chart.js"></script>
+    <!--script src="scripts/javascripts/d3Chart.js"></script-->
     <script src="scripts/javascripts/heat.js"></script>
