@@ -1,103 +1,20 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid" style="background-color: #6F7987;color:white;">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#/">IIB</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Chart Type<span class="caret"></span></a>
-              <ul id="chart-type" class="dropdown-menu" role="menu">
-                <li id="circle"><a href="#/">Zoomable Circles</a></li>
-                <li id="sunburst"><a href="#/">Sunburst</a></li>
-                <li id="bilevel"><a href="#/">Bilevel</a></li>
-                <li id="tilford"><a href="#/">Tilford Tree</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="#/"><span class="chart-switcher glyphicon glyphicon-refresh" data-toggle='tooltip' data-placement='bottom' title='Refresh Chart'></span></a>
-            </li>
-          </ul>
-          <form class="navbar-form navbar-left" role="search">
-            <select id="data-type" class="form-control" style="width:200px;">
-              <option value="cpu">CPU Usage</option>
-              <option value="mem">Memory Usage</option>
-            </select>
-          </form>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Start Monitors<span class="caret"></span></a>
-              <ul id="admin-monitor-start" class="dropdown-menu" role="menu">
-                <li id="admin-cpu"><a href="#/">CPU Monitor</a></li>
-                <li id="admin-mem"><a href="#/">Memory Monitor</a></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Stop Monitors<span class="caret"></span></a>
-              <ul id="admin-monitor-stop" class="dropdown-menu" role="menu">
-                <li id="admin-cpu"><a href="#/">CPU Monitor</a></li>
-                <li id="admin-mem"><a href="#/">Memory Monitor</a></li>
-              </ul>
-            </li>
-            <li><a href="#/" ng-controller="egCtrl"><img ng-click="getEgs('5530d8571fbc4b1c4ce37ed4')" src="/images/ibm-logo-white.gif"/ style="width:54px;height:20px;"><span> {{ egs[0].UUID }}</span></a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-
-
-    <div id="content" class="container-fluid" style="margin-top:50px;">
-      <div class="row" ng-controller="egCtrl">
-        <div class="col-md-7" id="chart-content" circle-chart datajson="'http://localhost:8080/broker/getJson'">
-          
-        </div>
-
-
-        <div class="col-md-5">
-          <div class="row">
-            <h1 style="margin-left:auto;margin-right:auto;display:inline-block;">
-              <font style="color:#6F799B;">IIB</font> <font style="color:#FF5600;">Heat</font><font style="color:#C3FF00">Map</font>
-            </h1>
-          </div>
-
-          <div class="row" id="details-content" style="color:white; margin-left:auto; margin-right:auto;">
-            <p class="welcome-message active"><strong>Welcome! Click on the map to navigate around.</strong></p>
-          </div>
-
-          <div class="row">
-            <div class="btn-toolbar toolbar deactivate" role="toolbar">
-              <div class="btn-group" role="group">
-                <button id="goto-parent" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-menu-left"></span>Parent</button>
-                <button id="goto-child" type="button" class="btn btn-default btn-xs">Child<span class="glyphicon glyphicon-menu-right"></span></button>
-              </div>
-            </div>
-
-            <div class="details active" style="width:90%;">
-              <ul id="details" class="nav nav-tabs nav-justified">
-                <li role="presentation" class="active"><a data-target="#resources" aria-controls="resources" role="tab" data-toggle="tab">Resources</a></li>
-                <li role="presentation" ><a data-target="#details1" aria-controls="details1" role="tab" data-toggle="tab">Details1</a></li>
-                <li role="presentation" ><a data-target="#details2" aria-controls="details2" role="tab" data-toggle="tab">Details2</a></li>
-
-                <div class="tab-content">
-                  <div role="tabpanel" class="tab-pane fade in active" id="resources">
-                    <p ng-repeat="eg in egs">{{eg.name}}</p>
-                  </div>
-                  <div role="tabpanel" class="tab-pane fade" id="details1"><h2>Details 1</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
-                  <div role="tabpanel" class="tab-pane fade" id="details2"><h2>Details 2</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
-                </div>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+<ng-include src="'views/navbar.html'"></ng-include>
+<div class="container top-buffer-lg">
+  <div class="jumbotron top-buffer-lg">
+    <div class="row">
+      <h1 style="margin-left:auto;margin-right:auto;display:inline-block;">
+                <font style="color:#6F799B;">IIB</font> <font style="color:#FF5600;">Heat</font><font style="color:#C3FF00">Map</font>
+              </h1>
     </div>
 
-    <!--script src="scripts/javascripts/d3Chart.js"></script-->
-    <script src="scripts/javascripts/heat.js"></script>
+    <div class="row top-buffer-md">
+      <div class="col-md-6">
+        <a class="btn btn-lg btn-default" ng-href="#/chart">Go to Chart View</a>
+      </div>
+
+      <div class="col-md-6">
+        <a class="btn btn-lg btn-default" ng-href="#/health">View the Health</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,7 +14,7 @@ module.exports = function(app, route) {
     ).methods(['get', 'put', 'post', 'delete']).before('get', function(req, res, next) {
         // workaround for when ther user requests all the documents
         // should work without, but it doesn't - TODO: find out why
-        if (req.params.id.length < 1)
+        if (!req.params.id || req.params.id.length < 1)
             Broker.find().exec(function(err, users) {
                 res.send(users);
             });

@@ -9,7 +9,7 @@
  */
 
  angular.module('iibHeatMapApp')
- 	.controller('egCtrl', function($scope, Broker, ResourceDetails) {
+ 	.controller('EgCtrl', function($scope, Broker, ResourceDetails) {
  		$scope.egs = {};
 
  		//$scope.details.eg = {};

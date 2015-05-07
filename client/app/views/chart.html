@@ -1,0 +1,49 @@
+    <ng-include src="'views/navbar.html'"></ng-include>
+    <div id="content" class="container-fluid" style="margin-top:50px;">
+      <div class="row">
+        <div class="col-md-7" id="chart-content" circle-chart datajson="'http://localhost:8080/broker/getJson'">
+          
+        </div>
+
+
+        <div class="col-md-5">
+          <div class="row">
+            <h1 style="margin-left:auto;margin-right:auto;display:inline-block;">
+              <font style="color:#6F799B;">IIB</font> <font style="color:#FF5600;">Heat</font><font style="color:#C3FF00">Map</font>
+            </h1>
+          </div>
+
+          <div class="row" id="details-content" style="color:white; margin-left:auto; margin-right:auto;">
+            <p class="welcome-message active"><strong>Welcome! Click on the map to navigate around.</strong></p>
+          </div>
+
+          <div class="row">
+            <div class="btn-toolbar toolbar deactivate" role="toolbar">
+              <div class="btn-group" role="group">
+                <button id="goto-parent" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-menu-left"></span>Parent</button>
+                <button id="goto-child" type="button" class="btn btn-default btn-xs">Child<span class="glyphicon glyphicon-menu-right"></span></button>
+              </div>
+            </div>
+
+            <div class="details active" style="width:90%;">
+              <ul id="details" class="nav nav-tabs nav-justified">
+                <li role="presentation" class="active"><a data-target="#resources" aria-controls="resources" role="tab" data-toggle="tab">Resources</a></li>
+                <li role="presentation" ><a data-target="#details1" aria-controls="details1" role="tab" data-toggle="tab">Details1</a></li>
+                <li role="presentation" ><a data-target="#details2" aria-controls="details2" role="tab" data-toggle="tab">Details2</a></li>
+
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane fade in active" id="resources">
+                    <p ng-repeat="eg in egs">{{eg.name}}</p>
+                  </div>
+                  <div role="tabpanel" class="tab-pane fade" id="details1"><h2>Details 1</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
+                  <div role="tabpanel" class="tab-pane fade" id="details2"><h2>Details 2</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--script src="scripts/javascripts/d3Chart.js"></script-->
+    <script src="scripts/javascripts/heat.js"></script>

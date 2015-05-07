@@ -9,6 +9,22 @@ h3 {
   margin-top: 10px;
 }
 
+.top-buffer-sm {
+  margin-top:25px;
+}
+
+.top-buffer-md {
+  margin-top: 50px;
+}
+
+.top-buffer-lg {
+  margin-top: 100px;
+}
+
+.jumbotron {
+  background-color: #1D2946;
+}
+
 .link {
   fill: none;
   stroke: #ccc;
