@@ -42,19 +42,12 @@ module.exports = function(app, route) {
 
             // build the IIB api url
             var apiPath = "/apiv1/executiongroups";
-            var apiUrl = "http://"+broker[0].host+":"+broker[0].port+"/"+apiPath;
 
-            var options = {
-                url: apiUrl,
-                method: "GET",
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }
-
+            var options = getOptions(broker[0], apiPath, 'GET');
             // Make a request to the IIB API
             request(options, function(error, resp, body) {
-                res.status(200).send(JSON.parse(body)['executionGroup']);
+                if (error) res.status(404).send('Integration server not found');
+                else res.status(200).send(JSON.parse(body)['executionGroup']);
             });
         });
     });
@@ -68,26 +61,9 @@ module.exports = function(app, route) {
         Broker.find().exec(function(err, brokers) {
             if (err) return res.status(400).send('Bad request');
 
-            var calls = [];
-            for (var i=0; i<brokers.length; i++) {
-                var brokerHost = "http://"+brokers[i]['host']+":"+brokers[i]['port'];
-                calls.push(brokerHost);
-            }
-
-
             // path used on the external API
             var apiPath = "/apiv1/?depth=4";
 
-            // options used when making the call
-            var options = {
-                url: "",
-                method: "GET",
-                headers: {
-                    "Accept": "application/json"
-                }
-            }
-
-            //var calls = ["http://localhost:4415", "http://localhost:4417"];
             var index = 1;
             var brokerIndex = 0;
 
@@ -127,7 +103,7 @@ module.exports = function(app, route) {
                 }
                 chartData['children'].push(brokerData);
 
-                if (index == (calls.length)) {
+                if (index == (brokers.length)) {
                     res.send(chartData);
                     index = 1;
                     chartData = {
@@ -138,12 +114,39 @@ module.exports = function(app, route) {
                 index++;
             }
 
-            for (var i = 0; i < calls.length; i++) {
-                options['url'] = calls[i] + apiPath;
+            // call the iib API for each broker in the database
+            for (var i = 0; i < brokers.length; i++) {
+                var options = getOptions(brokers[i], apiPath, 'GET');
                 request(options, callBack);
             }
         });
 
+    }
+
+    function getOptions(node, path, method) {
+        // check if the integration node uses ssl
+        var ssl = "http://";
+        if (node.ssl) {
+            ssl = "http://";
+        }
+
+        // the IIB API url
+        var apiUrl = ssl + node.host +":"+ node.port + path;
+
+        // create the authorizaation string
+        var auth = 'Basic ' + new Buffer(node.username + '/' + node.password).toString('base64');
+
+        // create the request options
+        var options = {
+            url: apiUrl,
+            method: method,
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': auth
+            }
+        }
+
+        return options;
     }
 
     // Return middleware

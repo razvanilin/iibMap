@@ -21,6 +21,10 @@ var BrokerSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		default: ''
+	},
+	ssl: {
+		type: Boolean,
+		default: false
 	}
 });
 
