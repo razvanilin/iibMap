@@ -24,13 +24,21 @@ module.exports = function(app, route) {
 
     Broker.register(app, route);
 
-    app.get('/broker/getJson', iibLayout);
 
+    /*
+     * GET the brokers topology
+     */
+    app.get('/broker/topology', iibLayout);
+
+
+    /*
+     * GET the execution group of a certain broker :id
+     */
     app.get('/broker/:id/executiongroups', function(req, res, next) {
 
         // get the broker data from the local api database
         Broker.find({_id: req.params.id}).exec(function(err, broker) {
-            if (err) return res.status(404).send('Broker not found');
+            if (err) return res.status(404).send('Integration node not found');
 
             // build the IIB api url
             var apiPath = "/apiv1/executiongroups";
@@ -51,7 +59,9 @@ module.exports = function(app, route) {
         });
     });
 
-    // get json data from IIB API
+    /*
+     * GET json data from IIB API
+     */
     function iibLayout(req, res, next) {
 
         // get all the brokers from the database
@@ -86,26 +96,28 @@ module.exports = function(app, route) {
 
                 var brokerData = {
                     "id": brokers[brokerIndex]['_id'],
-                    "type": responseString['type'],
-                    "name": responseString['name'],
+                    "type": responseString.type,
+                    "name": responseString.name,
                     "children": []
                 };
                 brokerIndex++;
 
                 // Go through all the execution groups 
-                for (var j = 0; j < responseString['executionGroups']['executionGroup'].length; j++) {
+                for (var j = 0; j < responseString.executionGroups.executionGroup.length; j++) {
                     var tempData = {
                         'id': 'eg'+Math.floor((Math.random() * 1000) + 1),
-                        'type': responseString['executionGroups']['type'],
-                        'name': responseString['executionGroups']['executionGroup'][j]['name'],
+                        'type': responseString.executionGroups.type,
+                        'name': responseString.executionGroups.executionGroup[j].name,
+                        'isRunning': responseString.executionGroups.executionGroup[j].isRunning,
                         'children': []
                     };
                     var chartIndex = 1;
-                    for (var i = 0; i < responseString['executionGroups']['executionGroup'][j]['messageFlows']['messageFlow'].length; i++) {
+                    for (var i = 0; i < responseString.executionGroups.executionGroup[j].messageFlows.messageFlow.length; i++) {
                         var messageFlow = {
                             "id": "flow" + Math.floor((Math.random() * 1000) + 1),
-                            "type": responseString['executionGroups']['executionGroup'][j]['messageFlows']['type'],
-                            "name": responseString['executionGroups']['executionGroup'][j]['messageFlows']['messageFlow'][i]['name'],
+                            "type": responseString.executionGroups.executionGroup[j].messageFlows.type,
+                            "name": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].name,
+                            "isRunning": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].isRunning,
                             "size": Math.floor((Math.random() * 5000) + 100)
                         };
                         tempData['children'].push(messageFlow);
