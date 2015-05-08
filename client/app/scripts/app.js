@@ -33,6 +33,10 @@ angular
                 templateUrl: 'views/health.html',
                 controller: 'HealthCtrl'
             })
+            .when('/addNode', {
+              templateUrl: 'views/add-node.html',
+              controller: 'AddNodeCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

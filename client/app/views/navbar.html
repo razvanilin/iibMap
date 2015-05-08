@@ -11,11 +11,14 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="dropdown">
+            <li ng-class="{'active':viewChart}">
               <a ng-href="#/chart">Chart View</a>
             </li>
-            <li>
+            <li ng-class="{'active':viewHealth}">
               <a ng-href="#/health">Health</a>
+            </li>
+            <li ng-class="{'active':viewAddNode}">
+              <a ng-href="#/addNode">Add Integration Node</a>
             </li>
           </ul>
 

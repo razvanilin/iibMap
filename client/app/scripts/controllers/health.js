@@ -12,8 +12,11 @@
  	.controller('HealthCtrl', function($scope, Broker) {
  		$scope.health = {};
 
- 		Broker.getList().then(function(brokers) {
- 			$scope.health = brokers;
- 			console.log($scope.health);
+ 		//used for the navbar active selection
+ 		$scope.viewHealth = true;
+
+ 		Broker.one('topology').get().then(function(brokers) {
+ 			$scope.topology = brokers;
+ 			console.log($scope.topology);
  		});
  	});

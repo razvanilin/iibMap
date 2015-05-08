@@ -1,4 +1,26 @@
 <ng-include src="'views/navbar.html'"></ng-include>
-<div class="container top-buffer-lg">
-	<h1>This is the Health view</h1>
+<div class="container top-buffer-md">
+	<h1>Health</h1>
+	<div class="row top-buffer-md">
+		<ul class="list-group">
+			<li class="list-group-item" style="background-color:#6F7987;border:none" ng-repeat="node in topology.children">
+				{{node.name}}
+				<p></p>
+				<ul class="list-group drop-shadow">
+					<li class="list-group-item list-group-item-success" ng-class="{'list-group-item-danger':!eg.isRunning}" ng-repeat="eg in node.children">
+						<span ng-show="!eg.isRunning" class="glyphicon glyphicon-remove-sign"></span>
+						<span ng-show="eg.isRunning" class="glyphicon glyphicon-ok-sign"></span>
+						<strong>{{eg.name}}</strong>
+						<p></p>
+						<ul class="list-group drop-shadow">
+							<li class="list-group-item list-group-item-success" ng-class="{'list-group-item-danger':!flow.isRunning}" ng-repeat="flow in eg.children">
+								<span ng-show="!flow.isRunning" class="glyphicon glyphicon-remove-sign" style="float:left;"></span>
+								<span ng-show="flow.isRunning" class="glyphicon glyphicon-ok-sign" style="float:left;"></span>
+								{{flow.name}}</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
 </div>

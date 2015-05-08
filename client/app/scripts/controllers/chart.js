@@ -11,6 +11,10 @@
 angular.module('iibHeatMapApp')
     .controller('chartCtrl', function($scope, Broker) {
         $scope.chart = {};
+
+        // used for the navbar active selection
+        $scope.viewChart = true;
+
         $scope.chart.size = chartSize();
 
         var margin = 20;

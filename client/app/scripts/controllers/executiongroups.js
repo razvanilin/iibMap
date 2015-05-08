@@ -12,6 +12,9 @@
  	.controller('EgCtrl', function($scope, Broker, ResourceDetails) {
  		$scope.egs = {};
 
+ 		// used for the navbar active selection
+ 		$scope.viewChart = true;
+
  		//$scope.details.eg = {};
  		$scope.getEgs = function(brokerId) {
  			Broker.one(brokerId).customGET('executiongroups').then(function(data) {
