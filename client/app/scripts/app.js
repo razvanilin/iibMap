@@ -41,15 +41,15 @@ angular
                 redirectTo: '/'
             });
     })
-    .factory('BrokerRestangular', function(Restangular) {
+    .factory('INodeRestangular', function(Restangular) {
         return Restangular.withConfig(function(RestangularConfigurer) {
             RestangularConfigurer.setRestangularFields({
                 id: '_id'
             });
         });
     })
-    .factory('Broker', function(BrokerRestangular) {
-        return BrokerRestangular.service('broker');
+    .factory('INode', function(INodeRestangular) {
+        return INodeRestangular.service('broker');
     })
     .factory('ResourceDetails', function() {
         var resource = {

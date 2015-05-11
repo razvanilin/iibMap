@@ -9,7 +9,7 @@
  */
 
  angular.module('iibHeatMapApp')
- 	.controller('EgCtrl', function($scope, Broker, ResourceDetails) {
+ 	.controller('EgCtrl', function($scope, INode, ResourceDetails) {
  		$scope.egs = {};
 
  		// used for the navbar active selection
@@ -17,9 +17,9 @@
 
  		//$scope.details.eg = {};
  		$scope.getEgs = function(brokerId) {
- 			Broker.one(brokerId).customGET('executiongroups').then(function(data) {
+ 			INode.one(brokerId).customGET('executiongroups').then(function(data) {
  				if (data.status === 404) {
- 					$scope.message = "Broker Not Found";
+ 					$scope.message = "Integration Node not found";
  				} else {
  					$scope.egs = data;
  					console.log($scope.egs);
@@ -27,10 +27,10 @@
  			});
  		};
 
- 		this.getEgs = function(brokerId) {
- 			Broker.one(brokerId).customGET('executiongroups').then(function(data) {
+ 		this.getEgs = function(inodeId) {
+ 			INode.one(inodeId).customGET('executiongroups').then(function(data) {
  				if (data.status === 404) {
- 					$scope.message = "Broker Not Found";
+ 					$scope.message = "Integration Node not found";
  				} else {
  					$scope.egs = data;
  					ResourceDetails.resource = $scope.egs;

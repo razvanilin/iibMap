@@ -37,7 +37,9 @@ module.exports = function(app, route) {
     app.get('/broker/:id/executiongroups', function(req, res, next) {
 
         // get the broker data from the local api database
-        Broker.find({_id: req.params.id}).exec(function(err, broker) {
+        Broker.find({
+            _id: req.params.id
+        }).exec(function(err, broker) {
             if (err) return res.status(404).send('Integration node not found');
 
             // build the IIB api url
@@ -48,7 +50,8 @@ module.exports = function(app, route) {
             request(options, function(error, resp, body) {
                 if (error) res.status(404).send('Integration server not found');
                 else res.status(200).send(JSON.parse(body)['executionGroup']);
-            });
+            })
+            .auth(broker[0].username, broker[0].password, false);
         });
     });
 
@@ -66,50 +69,65 @@ module.exports = function(app, route) {
 
             var index = 1;
             var brokerIndex = 0;
+            var validJson = false;
 
             var callBack = function(error, resp, body) {
-                var responseString = JSON.parse(body);
-
-                var brokerData = {
-                    "id": brokers[brokerIndex]['_id'],
-                    "type": responseString.type,
-                    "name": responseString.name,
-                    "children": []
-                };
-                brokerIndex++;
-
-                // Go through all the execution groups 
-                for (var j = 0; j < responseString.executionGroups.executionGroup.length; j++) {
-                    var tempData = {
-                        'id': 'eg'+Math.floor((Math.random() * 1000) + 1),
-                        'type': responseString.executionGroups.type,
-                        'name': responseString.executionGroups.executionGroup[j].name,
-                        'isRunning': responseString.executionGroups.executionGroup[j].isRunning,
-                        'children': []
-                    };
-                    var chartIndex = 1;
-                    for (var i = 0; i < responseString.executionGroups.executionGroup[j].messageFlows.messageFlow.length; i++) {
-                        var messageFlow = {
-                            "id": "flow" + Math.floor((Math.random() * 1000) + 1),
-                            "type": responseString.executionGroups.executionGroup[j].messageFlows.type,
-                            "name": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].name,
-                            "isRunning": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].isRunning,
-                            "size": Math.floor((Math.random() * 5000) + 100)
-                        };
-                        tempData['children'].push(messageFlow);
-                        chartIndex++;
-                    }
-                    brokerData['children'].push(tempData);
+                // console.log(body);
+                var responseString;
+                try {
+                    responseString = JSON.parse(body);
+                    validJson = true
+                } catch (err) {
+                    /*console.log(resp.headers);
+                    console.log(body);*/
+                    validJson = false;
                 }
-                chartData['children'].push(brokerData);
 
-                if (index == (brokers.length)) {
-                    res.send(chartData);
-                    index = 1;
-                    chartData = {
-                        "name": "IIB",
+                if (validJson) {
+
+                    var brokerData = {
+                        "id": brokers[brokerIndex]['_id'],
+                        "type": responseString.type,
+                        "name": responseString.name,
                         "children": []
                     };
+                    brokerIndex++;
+
+                    // Go through all the execution groups 
+                    for (var j = 0; j < responseString.executionGroups.executionGroup.length; j++) {
+                        var tempData = {
+                            'id': 'eg' + Math.floor((Math.random() * 1000) + 1),
+                            'type': responseString.executionGroups.type,
+                            'name': responseString.executionGroups.executionGroup[j].name,
+                            'isRunning': responseString.executionGroups.executionGroup[j].isRunning,
+                            'children': []
+                        };
+                        var chartIndex = 1;
+                        for (var i = 0; i < responseString.executionGroups.executionGroup[j].messageFlows.messageFlow.length; i++) {
+                            var messageFlow = {
+                                "id": "flow" + Math.floor((Math.random() * 1000) + 1),
+                                "type": responseString.executionGroups.executionGroup[j].messageFlows.type,
+                                "name": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].name,
+                                "isRunning": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].isRunning,
+                                "size": Math.floor((Math.random() * 5000) + 100)
+                            };
+                            tempData['children'].push(messageFlow);
+                            chartIndex++;
+                        }
+                        brokerData['children'].push(tempData);
+                    }
+                    chartData['children'].push(brokerData);
+
+                    if (index == (brokers.length)) {
+                        //console.log(chartData);
+                        res.send(chartData);
+                        index = 1;
+                        chartData = {
+                            "name": "IIB",
+                            "children": []
+                        };
+                    }
+                    
                 }
                 index++;
             }
@@ -117,7 +135,11 @@ module.exports = function(app, route) {
             // call the iib API for each broker in the database
             for (var i = 0; i < brokers.length; i++) {
                 var options = getOptions(brokers[i], apiPath, 'GET');
-                request(options, callBack);
+
+                console.log(options.headers);
+                // send a request using the options and using the auth() method for authentication
+                request(getOptions(brokers[i], apiPath, 'GET'), callBack)
+                    .auth(brokers[i].username, brokers[i].password, false);
             }
         });
 
@@ -127,22 +149,23 @@ module.exports = function(app, route) {
         // check if the integration node uses ssl
         var ssl = "http://";
         if (node.ssl) {
-            ssl = "http://";
+            ssl = "https://";
         }
 
         // the IIB API url
-        var apiUrl = ssl + node.host +":"+ node.port + path;
+        var apiUrl = ssl + node.host + ":" + node.port + path;
 
         // create the authorizaation string
-        var auth = 'Basic ' + new Buffer(node.username + '/' + node.password).toString('base64');
+        // Authentication doesn't work if placed in the options
+        // var auth = 'Basic ' + new Buffer(node.username + '/' + node.password).toString('base64');
+        //console.log(auth + " -  " + apiUrl);
 
         // create the request options
         var options = {
             url: apiUrl,
             method: method,
             headers: {
-                'Accept': 'application/json',
-                'Authorization': auth
+                'Accept': 'application/json'
             }
         }
 

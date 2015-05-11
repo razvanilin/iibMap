@@ -9,13 +9,13 @@
  */
 
  angular.module('iibHeatMapApp')
- 	.controller('HealthCtrl', function($scope, Broker) {
+ 	.controller('HealthCtrl', function($scope, INode) {
  		$scope.health = {};
 
  		//used for the navbar active selection
  		$scope.viewHealth = true;
 
- 		Broker.one('topology').get().then(function(brokers) {
+ 		INode.one('topology').get().then(function(brokers) {
  			$scope.topology = brokers;
  			console.log($scope.topology);
  		});

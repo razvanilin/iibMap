@@ -4,7 +4,7 @@
 	<div class="row top-buffer-md">
 		<ul class="list-group">
 			<li class="list-group-item" style="background-color:#6F7987;border:none" ng-repeat="node in topology.children">
-				{{node.name}}
+				<h3>{{node.name}}</h3>
 				<p></p>
 				<ul class="list-group drop-shadow">
 					<li class="list-group-item list-group-item-success" ng-class="{'list-group-item-danger':!eg.isRunning}" ng-repeat="eg in node.children">

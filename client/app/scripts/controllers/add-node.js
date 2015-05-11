@@ -8,9 +8,9 @@
  * Controller of the iibHeatMapApp
  */
 angular.module('iibHeatMapApp')
-  .controller('AddNodeCtrl', function ($scope) {
+  .controller('AddNodeCtrl', function ($scope, INode) {
     $scope.viewAddNode = true;
-    $scope.node = {
+    $scope.inode = {
     	host: '',
     	port: '',
     	ssl: false,
@@ -19,6 +19,11 @@ angular.module('iibHeatMapApp')
     };
 
     $scope.addNode = function() {
-    	console.log($scope.node);
+    	console.log($scope.inode);
+    	INode.post($scope.inode).then(function(data) {
+    		console.log(data);
+    	}, function(response) {
+    		console.log(response);
+    	});
     }
   });
