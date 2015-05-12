@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var BrokerSchema = new mongoose.Schema({
+var INodeSchema = new mongoose.Schema({
 	host: {
 		type: String,
 		required: true
@@ -23,4 +23,4 @@ var BrokerSchema = new mongoose.Schema({
 	}
 });
 
-module.exports = BrokerSchema;
+module.exports = INodeSchema;

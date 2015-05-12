@@ -1,3 +1,3 @@
 module.exports = {
-	broker: require('./Broker.js')
+	inode: require('./INode.js')
 };

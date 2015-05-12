@@ -9,26 +9,15 @@
  */
 
  angular.module('iibHeatMapApp')
- 	.controller('ChartCtrl', function($scope, INode, ResourceDetails) {
+ 	.controller('ChartCtrl', function($scope, INode, ResourceDetails, CONFIG) {
  		$scope.egs = {};
+ 		$scope.topology = CONFIG.TOPOLOGY;
 
  		// used for the navbar active selection
  		$scope.viewChart = true;
 
- 		//$scope.details.eg = {};
- 		$scope.getEgs = function(brokerId) {
- 			INode.one(brokerId).customGET('executiongroups').then(function(data) {
- 				if (data.status === 404) {
- 					$scope.message = "Integration Node not found";
- 				} else {
- 					$scope.egs = data;
- 					console.log($scope.egs);
- 				}
- 			});
- 		};
-
  		this.getEgs = function(inodeId) {
- 			INode.one(inodeId).customGET('executiongroups').then(function(data) {
+ 			INode.one(inodeId).customGET('iservers').then(function(data) {
  				if (data.status === 404) {
  					$scope.message = "Integration Node not found";
  				} else {

@@ -16,7 +16,8 @@ angular
         'ui.bootstrap'
     ])
     .constant("CONFIG", {
-        "API_HOST": "http://localhost:8080"
+        "API_HOST": "http://localhost:8080",
+        "TOPOLOGY": "http://localhost:8080/inode/topology"
     })
     .config(function($routeProvider, RestangularProvider, CONFIG) {
         RestangularProvider.setBaseUrl(CONFIG.API_HOST);
@@ -49,7 +50,7 @@ angular
         });
     })
     .factory('INode', function(INodeRestangular) {
-        return INodeRestangular.service('broker');
+        return INodeRestangular.service('inode');
     })
     .factory('ResourceDetails', function() {
         var resource = {

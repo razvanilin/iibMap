@@ -16,8 +16,8 @@
  		//used for the navbar active selection
  		$scope.viewHealth = true;
 
- 		INode.one('topology').get().then(function(brokers) {
- 			$scope.topology = brokers;
+ 		INode.one('topology').get().then(function(inodes) {
+ 			$scope.topology = inodes;
  			$scope.isLoading = false;
  			console.log($scope.topology);
  		});

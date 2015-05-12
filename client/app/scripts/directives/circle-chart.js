@@ -52,7 +52,7 @@ var CircleChart = Class.create({
             .size([diameter - margin, diameter - margin])
             .value(function(d) {
                 return d.size;
-            })
+            });
 
         var chartContent = d3.select("div#chart-content");
 
@@ -96,13 +96,10 @@ var CircleChart = Class.create({
                 .attr("parent", function(d) {
                     if (d.parent) return d.parent['id']
                 })
-                .attr("ng-click", function(d) {
-                    return "getEgs('" + d.id + "')";
-                })
 
             .style({
                     "fill": function(d) {
-                        return d.children ? color(d.depth) : null;
+                        return d.type != 'messageFlows' ? color(d.depth) : null;
                     },
                     "display": "inline-block"
                 })

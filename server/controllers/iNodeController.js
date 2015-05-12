@@ -8,60 +8,72 @@ var chartData = {
 
 module.exports = function(app, route) {
     // Setup controller for REST
-    var Broker = restful.model(
-        'broker',
-        app.models.broker
+    var INode = restful.model(
+        'inode',
+        app.models.inode
     ).methods(['get', 'put', 'post', 'delete']).before('get', function(req, res, next) {
         // workaround for when ther user requests all the documents
         // should work without, but it doesn't - TODO: find out why
         if (!req.params.id || req.params.id.length < 1)
-            Broker.find().exec(function(err, users) {
+            INode.find().exec(function(err, users) {
                 res.send(users);
             });
         else
             next();
     });
 
-    Broker.register(app, route);
+    INode.register(app, route);
 
 
     /*
-     * GET the brokers topology
+     * GET the integration nodes topology
      */
-    app.get('/broker/topology', iibLayout);
+    app.get('/inode/topology', iibLayout);
 
 
     /*
-     * GET the execution group of a certain broker :id
+     * GET the integration servers of a certain integration node :id
      */
-    app.get('/broker/:id/executiongroups', function(req, res, next) {
+    app.get('/inode/:id/iservers', function(req, res, next) {
 
-        // get the broker data from the local api database
-        Broker.find({
+        // get the integration node data from the local api database
+        INode.find({
             _id: req.params.id
-        }).exec(function(err, broker) {
+        }).exec(function(err, inode) {
             if (err) return res.status(404).send('Integration node not found');
 
             // build the IIB api url
             var apiPath = "/apiv1/executiongroups";
 
-            var options = getOptions(broker[0], apiPath, 'GET');
+            var options = getOptions(inode[0], apiPath, 'GET');
             // Make a request to the IIB API
             request(options, function(error, resp, body) {
                 if (error) res.status(404).send('Integration server not found');
                 else res.status(200).send(JSON.parse(body)['executionGroup']);
             })
-            .auth(broker[0].username, broker[0].password, false);
+            .auth(inode[0].username, inode[0].password, false);
         });
     });
+
+    /*
+     * GET the message flows of a certain integration server
+     */
+
+    /*app.get('broker/:id/executiongroups/:executiongroup', function() {
+        Broker.find({
+            _id : req.params.id
+        }).exec(function(err, iNode) {
+
+        });
+    });*/
 
     /*
      * GET json data from IIB API
      */
     function iibLayout(req, res, next) {
 
-        // get all the brokers from the database
-        Broker.find().exec(function(err, brokers) {
+        // get all the inodes from the database
+        INode.find().exec(function(err, inodes) {
             if (err) return res.status(400).send('Bad request');
 
             // path used on the external API
@@ -85,21 +97,23 @@ module.exports = function(app, route) {
 
                 if (validJson) {
 
-                    var brokerData = {
-                        "id": brokers[brokerIndex]['_id'],
+                    var inodeData = {
+                        "id": inodes[brokerIndex]['_id'],
                         "type": responseString.type,
                         "name": responseString.name,
+                        "size": Math.floor((Math.random() * 5000) + 100),
                         "children": []
                     };
                     brokerIndex++;
 
                     // Go through all the execution groups 
                     for (var j = 0; j < responseString.executionGroups.executionGroup.length; j++) {
-                        var tempData = {
+                        var iserverData = {
                             'id': 'eg' + Math.floor((Math.random() * 1000) + 1),
                             'type': responseString.executionGroups.type,
                             'name': responseString.executionGroups.executionGroup[j].name,
                             'isRunning': responseString.executionGroups.executionGroup[j].isRunning,
+                            'size': Math.floor((Math.random() * 5000) + 100),
                             'children': []
                         };
                         var chartIndex = 1;
@@ -111,14 +125,14 @@ module.exports = function(app, route) {
                                 "isRunning": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].isRunning,
                                 "size": Math.floor((Math.random() * 5000) + 100)
                             };
-                            tempData['children'].push(messageFlow);
+                            iserverData['children'].push(messageFlow);
                             chartIndex++;
                         }
-                        brokerData['children'].push(tempData);
+                        inodeData['children'].push(iserverData);
                     }
-                    chartData['children'].push(brokerData);
+                    chartData['children'].push(inodeData);
 
-                    if (index == (brokers.length)) {
+                    if (index == (inodes.length)) {
                         //console.log(chartData);
                         res.send(chartData);
                         index = 1;
@@ -132,14 +146,14 @@ module.exports = function(app, route) {
                 index++;
             }
 
-            // call the iib API for each broker in the database
-            for (var i = 0; i < brokers.length; i++) {
-                var options = getOptions(brokers[i], apiPath, 'GET');
+            // call the iib API for each integration node in the database
+            for (var i = 0; i < inodes.length; i++) {
+                var options = getOptions(inodes[i], apiPath, 'GET');
 
                 console.log(options.headers);
                 // send a request using the options and using the auth() method for authentication
-                request(getOptions(brokers[i], apiPath, 'GET'), callBack)
-                    .auth(brokers[i].username, brokers[i].password, false);
+                request(getOptions(inodes[i], apiPath, 'GET'), callBack)
+                    .auth(inodes[i].username, inodes[i].password, false);
             }
         });
 

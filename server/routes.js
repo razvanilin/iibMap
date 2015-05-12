@@ -1,3 +1,3 @@
 module.exports = {
-	'/broker': require('./controllers/BrokerController')
+	'/inode': require('./controllers/iNodeController')
 };
