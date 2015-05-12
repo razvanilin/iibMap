@@ -27,7 +27,7 @@ angular
             })
             .when('/chart', {
                 templateUrl: 'views/chart.html',
-                controller: 'EgCtrl'
+                controller: 'ChartCtrl'
             })
             .when('/health', {
                 templateUrl: 'views/health.html',

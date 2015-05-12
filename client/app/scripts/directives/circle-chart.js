@@ -6,10 +6,10 @@ angular.module('iibHeatMapApp')
                 datajson: '='
             },
             require: '^ngController',
-            link: function(scope, elem, attrs, egCtrl) {
+            link: function(scope, elem, attrs, ChartCtrl) {
 
                 var circleChart = new CircleChart(scope.datajson);
-                circleChart.initialise(scope.datajson, egCtrl);
+                circleChart.initialise(scope.datajson, ChartCtrl);
                 var svg = circleChart.generateGraph();
                 svg = angular.element(svg);
                 //scope.isLoading = true;
@@ -25,15 +25,15 @@ angular.module('iibHeatMapApp')
     });
 
 var CircleChart = Class.create({
-    initialise: function(datajson, egCtrl) {
+    initialise: function(datajson, ChartCtrl) {
         this.datajson = datajson;
-        this.egCtrl = egCtrl;
+        this.chartCtrl = ChartCtrl;
     },
 
     generateGraph: function() {
 
         console.log(this.datajson);
-        var egCtrl = this.egCtrl;
+        var chartCtrl = this.chartCtrl;
 
         function chartSize() {
             return (($(document).width() + $(document).height()) / 2) / 1.8;
@@ -107,7 +107,7 @@ var CircleChart = Class.create({
                     "display": "inline-block"
                 })
                 .on("click", function(d) {
-                    egCtrl.getEgs(d.id);
+                    chartCtrl.getEgs(d.id);
                     if (focus !== d) zoom(d), d3.event.stopPropagation();
                 });
 
