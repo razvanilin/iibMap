@@ -39,9 +39,4 @@
  			});
  		};
 
- 		this.test = function() {
- 			$scope.testMsg = "something";
- 			console.log($scope.testMsg);
- 		};
-
  	});

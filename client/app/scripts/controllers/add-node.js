@@ -19,11 +19,15 @@ angular.module('iibHeatMapApp')
     };
 
     $scope.addNode = function() {
-    	console.log($scope.inode);
-    	INode.post($scope.inode).then(function(data) {
-    		console.log(data);
-    	}, function(response) {
-    		console.log(response);
-    	});
+
+        if ($scope.inode.host.length > 1 && $scope.inode.port.length > 1) {
+        	INode.post($scope.inode).then(function(data) {
+        		console.log(data);
+        	}, function(response) {
+        		console.log(response);
+        	});
+        } else {
+            $scope.error = "Make sure the required fields are completed";
+        }
     }
   });
