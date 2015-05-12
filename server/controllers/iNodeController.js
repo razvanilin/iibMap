@@ -48,10 +48,10 @@ module.exports = function(app, route) {
             var options = getOptions(inode[0], apiPath, 'GET');
             // Make a request to the IIB API
             request(options, function(error, resp, body) {
-                if (error) res.status(404).send('Integration server not found');
-                else res.status(200).send(JSON.parse(body)['executionGroup']);
-            })
-            .auth(inode[0].username, inode[0].password, false);
+                    if (error) res.status(404).send('Integration server not found');
+                    else res.status(200).send(JSON.parse(body)['executionGroup']);
+                })
+                .auth(inode[0].username, inode[0].password, false);
         });
     });
 
@@ -77,7 +77,7 @@ module.exports = function(app, route) {
             if (err) return res.status(400).send('Bad request');
 
             // path used on the external API
-            var apiPath = "/apiv1/?depth=4";
+            var apiPath = "/apiv1/?depth=6";
 
             var index = 1;
             var brokerIndex = 0;
@@ -123,11 +123,41 @@ module.exports = function(app, route) {
                                 "type": responseString.executionGroups.executionGroup[j].messageFlows.type,
                                 "name": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].name,
                                 "isRunning": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].isRunning,
-                                "size": Math.floor((Math.random() * 5000) + 100)
+                                "size": Math.floor((Math.random() * 5000) + 100),
                             };
                             iserverData['children'].push(messageFlow);
                             chartIndex++;
                         }
+
+                        for (var i = 0; i < responseString.executionGroups.executionGroup[j].applications.application.length; i++) {
+                            //console.log("yo");
+                            var application = {
+                                "id": "application" + Math.floor((Math.random() * 1000) + 1),
+                                "type": responseString.executionGroups.executionGroup[j].applications.type,
+                                "name": responseString.executionGroups.executionGroup[j].applications.application[i].name,
+                                "isRunning": responseString.executionGroups.executionGroup[j].applications.application[i].isRunning,
+                                "size": Math.floor((Math.random() * 5000) + 100),
+                                "children": []
+                            };
+
+                            console.log(responseString.executionGroups.executionGroup[j].applications.application[i]);
+
+                            if (responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow) {
+                                for (var k = 0; k < responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow.length; k++) {
+                                    var messageFlow = {
+                                        "id": "flow" + Math.floor((Math.random() * 1000) + 1),
+                                        "type": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.type,
+                                        "name": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow[k].name,
+                                        "isRunning": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow[k].isRunning,
+                                        "size": Math.floor((Math.random() * 5000) + 100)
+                                    };
+                                    application['children'].push(messageFlow);
+                                }
+                            }
+
+                            iserverData['children'].push(application);
+                        }
+
                         inodeData['children'].push(iserverData);
                     }
                     chartData['children'].push(inodeData);
@@ -141,7 +171,7 @@ module.exports = function(app, route) {
                             "children": []
                         };
                     }
-                    
+
                 }
                 index++;
             }
