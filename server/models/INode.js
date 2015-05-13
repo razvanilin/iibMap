@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 
 var INodeSchema = new mongoose.Schema({
+	name: {
+		type: String,
+		required: true
+	},
 	host: {
 		type: String,
 		required: true

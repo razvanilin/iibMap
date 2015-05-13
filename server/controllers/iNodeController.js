@@ -25,7 +25,28 @@ module.exports = function(app, route) {
         })
         .before('post', function(req, res, next) {
             // Make sure a connection can be made to the inode and get its name from the IIB API
-            request()
+            
+            req.body.name = '';
+            var options = getOptions(req.body, '/apiv1/', 'GET');
+            request(options, function(error, resp, body) {
+                if (error) return res.status(404).send('Integration node not found');
+
+                var responseString = JSON.parse(body);
+
+                req.body.name = responseString.name;
+                
+                // check if the inode details are already registered
+                INode.find({ host: req.body.host, port: req.body.port}).exec(function(err, inode) {
+                    // if there's an error it means that the node is not regstered so the POST is OK
+                    console.log(err);
+                    if (err || inode.length < 1) next();
+
+                    else return res.status(400).send("The node is already registerd with the application.");
+                });
+                
+            })
+            .auth(req.body.username, req.body.password, false);
+
         });
 
     INode.register(app, route);
