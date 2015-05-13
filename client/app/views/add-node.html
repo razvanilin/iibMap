@@ -1,6 +1,6 @@
 <ng-include src="'views/navbar.html'"></ng-include>
-<div class="container-fluid top-buffer-lg">
-<div class="jumbotron">
+<div class="container-fluid container-panel top-buffer-lg">
+
 	<div class="row">
 		<form role="form" class="form-horizontal">
 			<div class="form-group">
@@ -31,10 +31,10 @@
 				</div>
 			</div>
 
-			<div class="form-group">
+			<div class="form-group checkbox">
 				<label for="inputSsl" class="col-md-4 control-label">SSL</label>
 				<div class="col-md-4">
-					<input type="checkbox" ng-model="inode.ssl" class="form-control" id="inputSsl">
+					<toggle-switch ng-model="inode.ssl"><toggle-switch>
 				</div>
 			</div>
 
@@ -44,7 +44,7 @@
 
 			<div class="form-group">
 				<div class="col-md-offset-4 col-md-4">
-					<button type="submit" class="btn btn-default" ng-click="addNode()"><span ng-show="addLoading" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Add Node</button>
+					<button type="submit" class="btn btn-lg btn-default" ng-click="addNode()"><span ng-show="addLoading" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Add Node</button>
 				</div>
 			</div>
 		</form>
@@ -53,5 +53,4 @@
 		<div class="alert alert-danger" ng-show="nodeExists">{{ nodeExists }}</div>
 		<div class="alert alert-success" ng-show="addSuccess">{{ addSuccess }}</div>
 	</div>
-</div>
 </div>

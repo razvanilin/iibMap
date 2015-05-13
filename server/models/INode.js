@@ -24,6 +24,10 @@ var INodeSchema = new mongoose.Schema({
 	ssl: {
 		type: Boolean,
 		default: false
+	},
+	isActive: {
+		type: Boolean,
+		default: true
 	}
 });
 

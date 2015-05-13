@@ -13,7 +13,8 @@ angular
         'ngResource',
         'ngRoute',
         'restangular',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'toggle-switch'
     ])
     .constant("CONFIG", {
         "API_HOST": "http://localhost:8080",
@@ -34,7 +35,11 @@ angular
                 templateUrl: 'views/health.html',
                 controller: 'HealthCtrl'
             })
-            .when('/addNode', {
+            .when('/manage', {
+              templateUrl: 'views/manage.html',
+              controller: 'ManageCtrl'
+            })
+            .when('/manage/addNode', {
               templateUrl: 'views/add-node.html',
               controller: 'AddNodeCtrl'
             })

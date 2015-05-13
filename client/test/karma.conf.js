@@ -29,6 +29,8 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/lodash/lodash.js',
       'bower_components/restangular/dist/restangular.js',
+      'bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js',
+      'bower_components/angular-toggle-switch/angular-toggle-switch.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

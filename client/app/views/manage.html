@@ -1,0 +1,34 @@
+<ng-include src="'views/navbar.html'"></ng-include>
+<div class="container-fluid container-panel top-buffer-lg">
+	<div class="row">
+		<table class="table" style="text-align: left;">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Hostname</th>
+					<th>Port</th>
+					<th>SSL</th>
+					<th>Status</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="inode in inodes | orderBy: 'name'">
+					<td>{{ inode.name }}</td>
+					<td>{{ inode.host }}</td>
+					<td>{{ inode.port }}</td>
+					<td>{{ inode.ssl }}</td>
+					<td>
+						<toggle-switch ng-model="inode.isActive"><toggle-switch>
+					</td>
+					<td style="width:200px;">
+						<button class="btn btn-default" ng-click="changeStatus(inode._id)"><span class="glyphicon glyphicon-pencil"></span></button>
+						<button ng-show="!inode.confirmDelete" ng-click="confirm(inode._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button> 
+						<button ng-show="inode.confirmDelete" ng-click="delete(inode._id)" class="btn btn-danger">Are you sure?</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</div>
