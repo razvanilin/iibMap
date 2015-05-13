@@ -1,4 +1,5 @@
 var restful = require('node-restful');
+var async = require('async');
 var request = require('request');
 
 var chartData = {
@@ -9,18 +10,23 @@ var chartData = {
 module.exports = function(app, route) {
     // Setup controller for REST
     var INode = restful.model(
-        'inode',
-        app.models.inode
-    ).methods(['get', 'put', 'post', 'delete']).before('get', function(req, res, next) {
-        // workaround for when ther user requests all the documents
-        // should work without, but it doesn't - TODO: find out why
-        if (!req.params.id || req.params.id.length < 1)
-            INode.find().exec(function(err, users) {
-                res.send(users);
-            });
-        else
-            next();
-    });
+            'inode',
+            app.models.inode
+        ).methods(['get', 'put', 'post', 'delete'])
+        .before('get', function(req, res, next) {
+            // workaround for when ther user requests all the documents
+            // should work without, but it doesn't - TODO: find out why
+            if (!req.params.id || req.params.id.length < 1)
+                INode.find().exec(function(err, users) {
+                    res.send(users);
+                });
+            else
+                next();
+        })
+        .before('post', function(req, res, next) {
+            // Make sure a connection can be made to the inode and get its name from the IIB API
+            request()
+        });
 
     INode.register(app, route);
 
@@ -80,111 +86,106 @@ module.exports = function(app, route) {
             var apiPath = "/apiv1/?depth=6";
 
             var index = 1;
-            var brokerIndex = 0;
             var validJson = false;
 
-            var callBack = function(error, resp, body) {
-                // console.log(body);
-                var responseString;
-                try {
-                    responseString = JSON.parse(body);
-                    validJson = true
-                } catch (err) {
-                    /*console.log(resp.headers);
-                    console.log(body);*/
-                    validJson = false;
-                }
+            async.map(inodes, function(inode) {
+                var options = getOptions(inode, apiPath, 'GET');
+                var inodeId = inode._id;
+                console.log(inodeId);
 
-                if (validJson) {
-
-                    var inodeData = {
-                        "id": inodes[brokerIndex]['_id'],
-                        "type": responseString.type,
-                        "name": responseString.name,
-                        "size": Math.floor((Math.random() * 5000) + 100),
-                        "children": []
-                    };
-                    brokerIndex++;
-
-                    // Go through all the execution groups 
-                    for (var j = 0; j < responseString.executionGroups.executionGroup.length; j++) {
-                        var iserverData = {
-                            'id': 'eg' + Math.floor((Math.random() * 1000) + 1),
-                            'type': responseString.executionGroups.type,
-                            'name': responseString.executionGroups.executionGroup[j].name,
-                            'isRunning': responseString.executionGroups.executionGroup[j].isRunning,
-                            'size': Math.floor((Math.random() * 5000) + 100),
-                            'children': []
-                        };
-                        var chartIndex = 1;
-                        for (var i = 0; i < responseString.executionGroups.executionGroup[j].messageFlows.messageFlow.length; i++) {
-                            var messageFlow = {
-                                "id": "flow" + Math.floor((Math.random() * 1000) + 1),
-                                "type": responseString.executionGroups.executionGroup[j].messageFlows.type,
-                                "name": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].name,
-                                "isRunning": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].isRunning,
-                                "size": Math.floor((Math.random() * 5000) + 100),
-                            };
-                            iserverData['children'].push(messageFlow);
-                            chartIndex++;
+                // Make a request for each item and 
+                request(getOptions(inode, apiPath, 'GET'), function(error, resp, body) {
+                        //console.log(resp);
+                        var responseString;
+                        try {
+                            responseString = JSON.parse(body);
+                            validJson = true
+                        } catch (err) {
+                            /*console.log(resp.headers);
+                            console.log(body);*/
+                            validJson = false;
                         }
 
-                        for (var i = 0; i < responseString.executionGroups.executionGroup[j].applications.application.length; i++) {
-                            //console.log("yo");
-                            var application = {
-                                "id": "application" + Math.floor((Math.random() * 1000) + 1),
-                                "type": responseString.executionGroups.executionGroup[j].applications.type,
-                                "name": responseString.executionGroups.executionGroup[j].applications.application[i].name,
-                                "isRunning": responseString.executionGroups.executionGroup[j].applications.application[i].isRunning,
+                        if (validJson) {
+
+                            var inodeData = {
+                                "id": inodeId,
+                                "type": responseString.type,
+                                "name": responseString.name,
                                 "size": Math.floor((Math.random() * 5000) + 100),
                                 "children": []
                             };
 
-                            console.log(responseString.executionGroups.executionGroup[j].applications.application[i]);
-
-                            if (responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow) {
-                                for (var k = 0; k < responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow.length; k++) {
+                            // Go through all the execution groups 
+                            for (var j = 0; j < responseString.executionGroups.executionGroup.length; j++) {
+                                var iserverData = {
+                                    'id': 'eg' + Math.floor((Math.random() * 1000) + 1),
+                                    'type': responseString.executionGroups.type,
+                                    'name': responseString.executionGroups.executionGroup[j].name,
+                                    'isRunning': responseString.executionGroups.executionGroup[j].isRunning,
+                                    'size': Math.floor((Math.random() * 5000) + 100),
+                                    'children': []
+                                };
+                                var chartIndex = 1;
+                                for (var i = 0; i < responseString.executionGroups.executionGroup[j].messageFlows.messageFlow.length; i++) {
                                     var messageFlow = {
                                         "id": "flow" + Math.floor((Math.random() * 1000) + 1),
-                                        "type": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.type,
-                                        "name": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow[k].name,
-                                        "isRunning": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow[k].isRunning,
-                                        "size": Math.floor((Math.random() * 5000) + 100)
+                                        "type": responseString.executionGroups.executionGroup[j].messageFlows.type,
+                                        "name": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].name,
+                                        "isRunning": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].isRunning,
+                                        "size": Math.floor((Math.random() * 5000) + 100),
                                     };
-                                    application['children'].push(messageFlow);
+                                    iserverData['children'].push(messageFlow);
+                                    chartIndex++;
                                 }
+
+                                for (var i = 0; i < responseString.executionGroups.executionGroup[j].applications.application.length; i++) {
+                                    //console.log("yo");
+                                    var application = {
+                                        "id": "application" + Math.floor((Math.random() * 1000) + 1),
+                                        "type": responseString.executionGroups.executionGroup[j].applications.type,
+                                        "name": responseString.executionGroups.executionGroup[j].applications.application[i].name,
+                                        "isRunning": responseString.executionGroups.executionGroup[j].applications.application[i].isRunning,
+                                        "size": Math.floor((Math.random() * 5000) + 100),
+                                        "children": []
+                                    };
+
+                                    if (responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow) {
+                                        for (var k = 0; k < responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow.length; k++) {
+                                            var messageFlow = {
+                                                "id": "flow" + Math.floor((Math.random() * 1000) + 1),
+                                                "type": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.type,
+                                                "name": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow[k].name,
+                                                "isRunning": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow[k].isRunning,
+                                                "size": Math.floor((Math.random() * 5000) + 100)
+                                            };
+                                            application['children'].push(messageFlow);
+                                        }
+                                    }
+
+                                    iserverData['children'].push(application);
+                                }
+
+                                inodeData['children'].push(iserverData);
+                            }
+                            chartData['children'].push(inodeData);
+
+                            if (index == (inodes.length)) {
+                                //console.log(chartData);
+                                res.send(chartData);
+                                index = 1;
+                                chartData = {
+                                    "name": "IIB",
+                                    "children": []
+                                };
                             }
 
-                            iserverData['children'].push(application);
                         }
-
-                        inodeData['children'].push(iserverData);
-                    }
-                    chartData['children'].push(inodeData);
-
-                    if (index == (inodes.length)) {
-                        //console.log(chartData);
-                        res.send(chartData);
-                        index = 1;
-                        chartData = {
-                            "name": "IIB",
-                            "children": []
-                        };
-                    }
-
-                }
-                index++;
-            }
-
-            // call the iib API for each integration node in the database
-            for (var i = 0; i < inodes.length; i++) {
-                var options = getOptions(inodes[i], apiPath, 'GET');
-
-                console.log(options.headers);
-                // send a request using the options and using the auth() method for authentication
-                request(getOptions(inodes[i], apiPath, 'GET'), callBack)
-                    .auth(inodes[i].username, inodes[i].password, false);
-            }
+                        index++;
+                    })
+                    // authenticate the request
+                    .auth(inode.username, inode.password, false);
+            });
         });
 
     }
