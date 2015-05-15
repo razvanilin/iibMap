@@ -23,31 +23,37 @@ module.exports = function(app, route) {
             else
                 next();
         })
-        .before('post', function(req, res, next) {
-            // Make sure a connection can be made to the inode and get its name from the IIB API
-            
-            req.body.name = '';
-            var options = getOptions(req.body, '/apiv1/', 'GET');
-            request(options, function(error, resp, body) {
+        .before('post', checkNode)
+        .before('put', checkNode);
+
+    function checkNode(req, res, next) {
+        // Make sure a connection can be made to the inode and get its name from the IIB API
+
+        req.body.name = '';
+        var options = getOptions(req.body, '/apiv1/', 'GET');
+        request(options, function(error, resp, body) {
                 if (error) return res.status(404).send('Integration node not found');
 
                 var responseString = JSON.parse(body);
 
                 req.body.name = responseString.name;
-                
+
                 // check if the inode details are already registered
-                INode.find({ host: req.body.host, port: req.body.port}).exec(function(err, inode) {
+                INode.find({
+                    host: req.body.host,
+                    port: req.body.port
+                }).exec(function(err, inode) {
                     // if there's an error it means that the node is not regstered so the POST is OK
                     console.log(err);
                     if (err || inode.length < 1) next();
 
                     else return res.status(400).send("The node is already registerd with the application.");
                 });
-                
+
             })
             .auth(req.body.username, req.body.password, false);
 
-        });
+    }
 
     INode.register(app, route);
 
@@ -65,7 +71,8 @@ module.exports = function(app, route) {
 
         // get the integration node data from the local api database
         INode.find({
-            _id: req.params.id
+            _id: req.params.id,
+            isActive: true
         }).exec(function(err, inode) {
             if (err) return res.status(404).send('Integration node not found');
 
@@ -100,7 +107,9 @@ module.exports = function(app, route) {
     function iibLayout(req, res, next) {
 
         // get all the inodes from the database
-        INode.find().exec(function(err, inodes) {
+        INode.find({
+            isActive: true
+        }).exec(function(err, inodes) {
             if (err) return res.status(400).send('Bad request');
 
             // path used on the external API
@@ -112,7 +121,6 @@ module.exports = function(app, route) {
             async.map(inodes, function(inode) {
                 var options = getOptions(inode, apiPath, 'GET');
                 var inodeId = inode._id;
-                console.log(inodeId);
 
                 // Make a request for each item and 
                 request(getOptions(inode, apiPath, 'GET'), function(error, resp, body) {
@@ -120,7 +128,8 @@ module.exports = function(app, route) {
                         var responseString;
                         try {
                             responseString = JSON.parse(body);
-                            validJson = true
+                            validJson = true;
+                            console.log(inode.name + " reached - " + validJson);
                         } catch (err) {
                             /*console.log(resp.headers);
                             console.log(body);*/

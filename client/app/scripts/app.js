@@ -43,6 +43,10 @@ angular
               templateUrl: 'views/add-node.html',
               controller: 'AddNodeCtrl'
             })
+            .when('/manage/editNode/:id', {
+              templateUrl: 'views/edit-node.html',
+              controller: 'EditNodeCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

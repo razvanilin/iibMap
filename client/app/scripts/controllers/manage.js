@@ -8,7 +8,7 @@
  * Controller of the iibHeatMapApp
  */
 angular.module('iibHeatMapApp')
-  .controller('ManageCtrl', function ($scope, INode) {
+  .controller('ManageCtrl', function ($scope, INode, $location) {
     $scope.viewManage = true;
     $scope.confirmDelete = false;
 
@@ -66,6 +66,10 @@ angular.module('iibHeatMapApp')
     		console.log(response);
     	});
     };
+
+    $scope.editNode = function(id) {
+        $location.path('manage/editNode/'+id);
+    }
 
     /*
      *	Get the node and its index into an array: [index, node]

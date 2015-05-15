@@ -22,7 +22,7 @@
 						<toggle-switch ng-model="inode.isActive" ng-change="changeStatus(inode._id)"><toggle-switch>
 					</td>
 					<td style="width:200px;">
-						<button class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
+						<button class="btn btn-default" ng-click="editNode(inode._id)"><span class="glyphicon glyphicon-pencil"></span></button>
 						<button ng-show="!inode.confirmDelete" ng-click="confirm(inode._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button> 
 						<button ng-show="inode.confirmDelete" ng-click="delete(inode._id)" class="btn btn-danger">Are you sure?</button>
 					</td>
