@@ -165,6 +165,7 @@ module.exports = function(app, route) {
                                         "isRunning": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].isRunning,
                                         "size": Math.floor((Math.random() * 5000) + 100),
                                     };
+                                    console.log("      ---> " + "flow pushed");
                                     iserverData['children'].push(messageFlow);
                                     chartIndex++;
                                 }
@@ -189,28 +190,31 @@ module.exports = function(app, route) {
                                                 "isRunning": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow[k].isRunning,
                                                 "size": Math.floor((Math.random() * 5000) + 100)
                                             };
+                                            console.log("           --->> " + "flow pushed");
                                             application['children'].push(messageFlow);
                                         }
                                     }
-
+                                    console.log("      --->> " + "application pushed");
                                     iserverData['children'].push(application);
                                 }
-
+                                console.log(" ---> " + "iservers pushed");
                                 inodeData['children'].push(iserverData);
                             }
+                            console.log(inode.name + " pushed");
                             chartData['children'].push(inodeData);
-
-                            if (index == (inodes.length)) {
-                                //console.log(chartData);
-                                res.send(chartData);
-                                index = 1;
-                                chartData = {
-                                    "name": "IIB",
-                                    "children": []
-                                };
-                            }
-
                         }
+
+                        if (index == (inodes.length)) {
+                            //console.log(chartData);
+                            console.log(inode.name + " sent - " + validJson + "\n");
+                            res.send(chartData);
+                            index = 1;
+                            chartData = {
+                                "name": "IIB",
+                                "children": []
+                            };
+                        }
+
                         index++;
                     })
                     // authenticate the request

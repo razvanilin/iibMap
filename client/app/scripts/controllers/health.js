@@ -12,6 +12,7 @@
  	.controller('HealthCtrl', function($scope, INode) {
  		$scope.health = {};
  		$scope.isLoading = true;
+ 		$scope.searchquery = "";
 
  		//used for the navbar active selection
  		$scope.viewHealth = true;

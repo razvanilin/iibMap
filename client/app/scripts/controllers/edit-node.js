@@ -8,9 +8,9 @@
  * Controller of the iibHeatMapApp
  */
 angular.module('iibHeatMapApp')
-  .controller('EditNodeCtrl', function ($scope, INode, $routeParams, $location) {
+    .controller('EditNodeCtrl', function($scope, INode, $routeParams, $location) {
 
-  	// variables user for feedback messages
+        // variables user for feedback messages
         $scope.viewAddNode = true;
         $scope.notFound = false;
         $scope.addLoading = false;
@@ -18,15 +18,15 @@ angular.module('iibHeatMapApp')
         $scope.nodeExists = false;
         // ----
 
-    $scope.inode = {};
+        $scope.inode = {};
 
-    INode.one($routeParams.id).get().then(function(data) {
-    	$scope.inode = data;
-    }, function(response) {
-    	console.log(response);
-    });
+        INode.one($routeParams.id).get().then(function(data) {
+            $scope.inode = data;
+        }, function(response) {
+            console.log(response);
+        });
 
-    $scope.addNode = function() {
+        $scope.addNode = function() {
             $scope.error = false;
             $scope.notFound = false;
             $scope.addSuccess = false;
@@ -61,4 +61,8 @@ angular.module('iibHeatMapApp')
                 $scope.error = "Make sure the required fields are completed";
             }
         }
-  });
+
+        $scope.goBack = function() {
+            $location.path('manage');
+        }
+    });

@@ -1,10 +1,18 @@
 <ng-include src="'views/navbar.html'"></ng-include>
 <div class="container-fluid container-panel top-buffer-md">
 	<h1>Health</h1>
-	<div class="row top-buffer-md">
+	<div class="row">
+		<div class="form-group">
+			<div class="col-md-offset-1 col-md-4 input-group">
+				<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+				<input type="text" ng-model="searchquery" class="form-control" id="inputSearchquery" placeholder="Search">
+			</div>
+		</div>
+	</div>
+	<div class="row">
 		<h1 ng-show="isLoading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate glyphicon-refresh-animate-main"></span></h1>
-		<ul class="list-group">
-			<li class="list-group-item" style="background-color:#6F7987;border:none" ng-repeat="node in topology.children">
+		<ul class="list-group" style="width:85%;margin-left:auto;margin-right:auto">
+			<li class="list-group-item" style="background-color:#6F7987;border:none" ng-repeat="node in topology.children | filter: {name: searchquery} | orderBy: 'name'">
 				<h3>{{node.name}}</h3>
 				<p></p>
 				<ul class="list-group drop-shadow">
