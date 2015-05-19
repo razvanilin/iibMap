@@ -44,10 +44,12 @@ module.exports = function(app, route) {
                     port: req.body.port
                 }).exec(function(err, inode) {
                     // if there's an error it means that the node is not regstered so the POST is OK
-                    console.log(err);
-                    if (err || inode.length < 1) next();
+                    console.log(inode.length);
+                    if (err || inode.length == 0) {
+                        next();
+                    }
 
-                    else return res.status(400).send("The node is already registerd with the application.");
+                    return res.status(400).send("The node is already registerd with the application.");
                 });
 
             })
@@ -57,6 +59,25 @@ module.exports = function(app, route) {
 
     INode.register(app, route);
 
+    /*
+     * Change the status of the node (active or not)
+     */
+    app.put('/inode/:id/status', function(req, res, next) {
+        INode.findOne({
+            _id: req.params.id
+        }).exec(function(err, inode) {
+            if (err) res.status(404).send('Integration node not found');
+
+            inode.isActive = req.body.isActive;
+
+            inode.save(function(err) {
+                if(err) {
+                    return res.status(400).send('The Integration Node was not updated');
+                } 
+                return res.status(200).send('The Integration Node was updated');
+            });
+        });
+    });
 
     /*
      * GET the integration nodes topology

@@ -34,6 +34,7 @@ angular.module('iibHeatMapApp')
 
             if ($scope.inode.host.length > 1 && $scope.inode.port.length > 1) {
                 $scope.addLoading = true;
+                delete $scope.inode.isActive;
                 INode.one($routeParams.id).customPUT($scope.inode).then(function(data) {
                     console.log(data);
 
@@ -46,7 +47,7 @@ angular.module('iibHeatMapApp')
                     };
 
                     $scope.addLoading = false;
-                    $scope.addSuccess = "Node updatedSuccessfully.";
+                    $scope.addSuccess = "Node updated Successfully.";
 
                     $location.path('manage');
                 }, function(response) {

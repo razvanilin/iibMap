@@ -60,7 +60,7 @@ angular.module('iibHeatMapApp')
 
     	//$scope.inodes[index].isActive = !$scope.inodes[index].isActive;
 
-    	INode.one(id).customPUT($scope.inodes[index]).then(function(data) {
+    	INode.one(id).customPUT($scope.inodes[index], 'status').then(function(data) {
     		console.log(data);
     	}, function(response) {
     		console.log(response);
