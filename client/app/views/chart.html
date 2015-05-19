@@ -34,12 +34,7 @@
                 <div class="tab-content">
                   <div role="tabpanel" class="tab-pane fade in active" id="resources">
                     <h3>{{ selectedElement }}</h3>
-                    <div class="col-md-6" style="border-right: 1px solid">
-                      <h4>Integration Servers</h4>
-                      <p ng-class="eg.isRunning ? 'text-success' : 'text-danger'" ng-repeat="eg in egs | orderBy: '-isRunning'"><strong>{{eg.name}}</strong></p>
-                    </div>
-
-
+                    <ng-include src="'views/iserver/iserver-resource.html'"></ng-include>
                   </div>
                   <div role="tabpanel" class="tab-pane fade" id="details1"><h2>Details 1</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
                   <div role="tabpanel" class="tab-pane fade" id="details2"><h2>Details 2</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>

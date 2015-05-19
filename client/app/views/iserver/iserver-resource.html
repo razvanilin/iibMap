@@ -1,0 +1,4 @@
+<div class="col-md-6" style="border-right: 1px solid">
+  <h4>Integration Servers</h4>
+  <p ng-class="eg.isRunning ? 'text-success' : 'text-danger'" ng-repeat="eg in resource | orderBy: '-isRunning'"><strong>{{eg.name}}</strong></p>
+</div>

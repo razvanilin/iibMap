@@ -104,7 +104,7 @@ var CircleChart = Class.create({
                     "display": "inline-block"
                 })
                 .on("click", function(d) {
-                    chartCtrl.getEgs(d.id, d.name);
+                    chartCtrl.getResources(d.id, null, null, null, d.name);
                     if (focus !== d) zoom(d), d3.event.stopPropagation();
                 });
 
