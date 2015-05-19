@@ -14,7 +14,8 @@ angular
         'ngRoute',
         'restangular',
         'ui.bootstrap',
-        'toggle-switch'
+        'toggle-switch',
+        'autofocus'
     ])
     .constant("CONFIG", {
         "API_HOST": "http://localhost:8080",
