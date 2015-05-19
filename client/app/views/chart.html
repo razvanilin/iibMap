@@ -33,7 +33,8 @@
 
                 <div class="tab-content">
                   <div role="tabpanel" class="tab-pane fade in active" id="resources">
-                    <h3>{{ selectedElement }}</h3>
+                    <h3><small><span ng-show="resourceLoading" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></small> {{ selectedElement }}</h3>
+
                     <ng-include ng-show="resource.type == 'inode'" src="'views/inode/inode-resource.html'"></ng-include>
                     <ng-include ng-show="resource.type == 'iserver'" src="'views/iserver/iserver-resource.html'"></ng-include>
                     <ng-include ng-show="resource.type == 'messageflow' || resource.type == 'applicationflow'" src="'views/messageflow/messageflow-resource.html'"></ng-include>

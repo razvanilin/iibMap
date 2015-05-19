@@ -100,8 +100,12 @@ var CircleChart = Class.create({
             .style({
                     "fill": function(d) {
                         if (d.type == 'messageflow') {
+                            if (!d.isRunning)
+                                return "#ffd6d6";
                             return 'white';
                         } else if (d.type == 'applicationflow') {
+                            if (!d.isRunning)
+                                return "#ff9307";
                             return 'yellow';
                         } else {
                             return color(d.depth);

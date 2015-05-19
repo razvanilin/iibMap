@@ -19,6 +19,7 @@
  		$scope.viewChart = true;
 
  		this.getResources = function(inodeId, iserver, application, messageflow, type, name) {
+ 			$scope.resourceLoading = true;
  			$scope.selectedElement = name;
  			$scope.resource.type = type;
  			var route = "iservers";
@@ -34,6 +35,7 @@
  			}
 
  			INode.one(inodeId).customGET(route).then(function(data) {
+ 				$scope.resourceLoading = false;
  				if (data.status === 404) {
  					$scope.message = "Integration Node not found";
  				} else {
