@@ -220,7 +220,7 @@ module.exports = function(app, route) {
 
                             var inodeData = {
                                 "id": inodeId,
-                                "type": responseString.type,
+                                "type": "inode",
                                 "name": responseString.name,
                                 "size": Math.floor((Math.random() * 5000) + 100),
                                 "children": []
@@ -230,7 +230,7 @@ module.exports = function(app, route) {
                             for (var j = 0; j < responseString.executionGroups.executionGroup.length; j++) {
                                 var iserverData = {
                                     'id': 'eg' + Math.floor((Math.random() * 1000) + 1),
-                                    'type': responseString.executionGroups.type,
+                                    'type': "iserver",
                                     'name': responseString.executionGroups.executionGroup[j].name,
                                     'isRunning': responseString.executionGroups.executionGroup[j].isRunning,
                                     'size': Math.floor((Math.random() * 5000) + 100),
@@ -240,7 +240,7 @@ module.exports = function(app, route) {
                                 for (var i = 0; i < responseString.executionGroups.executionGroup[j].messageFlows.messageFlow.length; i++) {
                                     var messageFlow = {
                                         "id": "flow" + Math.floor((Math.random() * 1000) + 1),
-                                        "type": responseString.executionGroups.executionGroup[j].messageFlows.type,
+                                        "type": "messageflow",
                                         "name": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].name,
                                         "isRunning": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].isRunning,
                                         "size": Math.floor((Math.random() * 5000) + 100),
@@ -254,7 +254,7 @@ module.exports = function(app, route) {
                                     //console.log("yo");
                                     var application = {
                                         "id": "application" + Math.floor((Math.random() * 1000) + 1),
-                                        "type": responseString.executionGroups.executionGroup[j].applications.type,
+                                        "type": "application",
                                         "name": responseString.executionGroups.executionGroup[j].applications.application[i].name,
                                         "isRunning": responseString.executionGroups.executionGroup[j].applications.application[i].isRunning,
                                         "size": Math.floor((Math.random() * 5000) + 100),
@@ -265,7 +265,7 @@ module.exports = function(app, route) {
                                         for (var k = 0; k < responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow.length; k++) {
                                             var messageFlow = {
                                                 "id": "flow" + Math.floor((Math.random() * 1000) + 1),
-                                                "type": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.type,
+                                                "type": "applicationflow",
                                                 "name": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow[k].name,
                                                 "isRunning": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow[k].isRunning,
                                                 "size": Math.floor((Math.random() * 5000) + 100)

@@ -1,7 +1,7 @@
     <ng-include src="'views/navbar.html'"></ng-include>
     <div id="content" class="container-fluid" style="margin-top:50px;">
       <div class="row">
-        <div class="col-md-7" id="chart-content" circle-chart datajson="'http://localhost:8080/inode/topology'">
+        <div class="col-md-7" id="chart-content" circle-chart datajson="topology">
           <h1><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate glyphicon-refresh-animate-main"></span></h1>
         </div>
 
@@ -14,7 +14,7 @@
           </div>
 
           <div class="row" id="details-content" style="color:white; margin-left:auto; margin-right:auto;">
-            <p class="welcome-message active"><strong>Welcome! Click on the map to navigate around.</strong></p>
+            <p class="welcome-message" ng-class="showResources ? 'deactivate' : 'activate'"><strong>Welcome! Click on the map to navigate around.</strong></p>
           </div>
 
           <div class="row">
@@ -34,7 +34,11 @@
                 <div class="tab-content">
                   <div role="tabpanel" class="tab-pane fade in active" id="resources">
                     <h3>{{ selectedElement }}</h3>
-                    <ng-include src="'views/iserver/iserver-resource.html'"></ng-include>
+                    <ng-include ng-show="resource.type == 'inode'" src="'views/inode/inode-resource.html'"></ng-include>
+                    <ng-include ng-show="resource.type == 'iserver'" src="'views/iserver/iserver-resource.html'"></ng-include>
+                    <ng-include ng-show="resource.type == 'messageflow' || resource.type == 'applicationflow'" src="'views/messageflow/messageflow-resource.html'"></ng-include>
+                    <ng-include ng-show="resource.type == 'application'" src="'views/application/application-resource.html'"></ng-include>
+
                   </div>
                   <div role="tabpanel" class="tab-pane fade" id="details1"><h2>Details 1</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
                   <div role="tabpanel" class="tab-pane fade" id="details2"><h2>Details 2</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>

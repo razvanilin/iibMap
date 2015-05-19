@@ -99,12 +99,30 @@ var CircleChart = Class.create({
 
             .style({
                     "fill": function(d) {
-                        return d.type != 'messageFlows' ? color(d.depth) : null;
+                        if (d.type == 'messageflow') {
+                            return 'white';
+                        } else if (d.type == 'applicationflow') {
+                            return 'yellow';
+                        } else {
+                            return color(d.depth);
+                        }
+                        //return ((d.type != 'messageflow') || (d.type != 'applicationflow')) ? color(d.depth) : 'white' : 'yellow';
                     },
                     "display": "inline-block"
                 })
                 .on("click", function(d) {
-                    chartCtrl.getResources(d.id, null, null, null, d.name);
+                    // check the type of the clicked element and call the getResources() method inside the chart controller
+                    if (d.type == "inode") {
+                        chartCtrl.getResources(d.id, null, null, null, d.type, d.name);
+                    } else if (d.type == "iserver") {
+                        chartCtrl.getResources(d.parent.id, d.name, null, null, d.type, d.name);
+                    } else if (d.type == "messageflow") {
+                        chartCtrl.getResources(d.parent.parent.id, d.parent.name, null, d.name, d.type, d.name);
+                    } else  if (d.type == "application") {
+                        chartCtrl.getResources(d.parent.parent.id, d.parent.name, d.name, null, d.type, d.name);
+                    } else if (d.type == "applicationflow") {
+                        chartCtrl.getResources(d.parent.parent.parent.id, d.parent.parent.name, d.parent.name, d.name, d.type, d.name);
+                    }
                     if (focus !== d) zoom(d), d3.event.stopPropagation();
                 });
 
