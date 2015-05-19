@@ -25,7 +25,7 @@
               </div>
             </div>
 
-            <div class="details active" style="width:90%;">
+            <div ng-class="{active:showResources}" class="details" style="width:90%;">
               <ul id="details" class="nav nav-tabs nav-justified">
                 <li role="presentation" class="active"><a data-target="#resources" aria-controls="resources" role="tab" data-toggle="tab">Resources</a></li>
                 <li role="presentation" ><a data-target="#details1" aria-controls="details1" role="tab" data-toggle="tab">Details1</a></li>
@@ -33,7 +33,13 @@
 
                 <div class="tab-content">
                   <div role="tabpanel" class="tab-pane fade in active" id="resources">
-                    <p ng-repeat="eg in egs">{{eg.name}}</p>
+                    <h3>{{ selectedElement }}</h3>
+                    <div class="col-md-6" style="border-right: 1px solid">
+                      <h4>Integration Servers</h4>
+                      <p ng-class="eg.isRunning ? 'text-success' : 'text-danger'" ng-repeat="eg in egs | orderBy: '-isRunning'"><strong>{{eg.name}}</strong></p>
+                    </div>
+
+
                   </div>
                   <div role="tabpanel" class="tab-pane fade" id="details1"><h2>Details 1</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
                   <div role="tabpanel" class="tab-pane fade" id="details2"><h2>Details 2</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
