@@ -82,7 +82,7 @@ module.exports = function(app, route) {
             var options = getOptions(inode[0], apiPath, 'GET');
             // Make a request to the IIB API
             request(options, function(error, resp, body) {
-                    if (error) res.status(404).send('Integration server not found');
+                    if (error) res.status(404).send('Integration node not found');
                     else res.status(200).send(JSON.parse(body)['executionGroup']);
                 })
                 .auth(inode[0].username, inode[0].password, false);
@@ -90,16 +90,96 @@ module.exports = function(app, route) {
     });
 
     /*
-     * GET the message flows of a certain integration server
+     * GET a single integration server from the API
      */
 
-    /*app.get('broker/:id/executiongroups/:executiongroup', function() {
-        Broker.find({
-            _id : req.params.id
-        }).exec(function(err, iNode) {
+    app.get('/inode/:id/iservers/:iserver', function(req, res, next) {
+        INode.find({
+            _id : req.params.id,
+            isActive: true
+        }).exec(function(err, inode) {
+            if (err) return res.status(404).send('Integration node not found');
 
+            // build the IIB api url
+            var apiPath = "/apiv1/executiongroups/" + req.params.iserver + "/?depth=2";
+
+            var options = getOptions(inode[0], apiPath, 'GET');
+
+            request(options, function(error, resp, body) {
+                if (error) res.status(404).send('Integration server not found');
+                else res.status(200).send(JSON.parse(body));
+            })
+            .auth(inode[0].username, inode[0].password, false);
         });
-    });*/
+    });
+
+    /*
+     *  GET a single message flow from the API
+     */
+
+    app.get('/inode/:id/iservers/:iserver/messageflows/:messageflow', function(req, res, next) {
+        INode.find({
+            _id: req.params.id,
+            isActive: true
+        }).exec(function(err, inode) {
+            if (err) return res.status(404).send('Integration node not found');
+
+            //build the IIB api url
+            var apiPath = "/apiv1/executiongroups/" + req.params.iserver + "/messageflows/" + req.params.messageflow;
+            var options = getOptions(inode[0], apiPath, 'GET');
+
+            request(options, function(error, resp, body) {
+                if (error) return status(404).send('Message flow not found');
+                else res.status(200).send(JSON.parse(body));
+            })
+            .auth(inode[0].username, inode[0].password, false);
+        });
+    });
+
+    /*
+     * GET a single application from the API
+     */
+
+    app.get('/inode/:id/iservers/:iserver/applications/:application', function(req, res, next) {
+        INode.find({
+            _id: req.params.id,
+            isActive: true
+        }).exec(function(err, inode) {
+            if (err) res.status(404).send('Integration node not found');
+
+            // build the IIB api url
+            var apiPath = "/apiv1/executiongroups/" + req.params.iserver + "/applications/" + req.params.application + "/?depth=2";
+            var options = getOptions(inode[0], apiPath, 'GET');
+
+            request(options, function(error, resp, body) {
+                if (error) res.status(404).send('Application not found');
+                else res.status(200).send(JSON.parse(body));
+            });
+        });
+    });
+
+    /*
+     * GET a single message flow from inside of an application
+     */
+
+    app.get('/inode/:id/iservers/:iserver/applications/:application/messageflows/:messageflow', function(req, res, next) {
+        INode.find({
+            _id: req.params.id,
+            isActive: true
+        }).exec(function(err, inode) {
+            if (err) return res.status(404).send('Integration node not found');
+
+            // build the api url
+            var apiPath = "/apiv1/executiongroups/" + req.params.iserver + "/applications/" + req.params.application + "/messageflows/" + req.params.messageflow;
+            var options = getOptions(inode[0], apiPath, 'GET');
+
+            request(options, function(error, resp, body) {
+                if (error) res.status(404).send('Message flow not found');
+                else res.status(200).send(JSON.parse(body));
+            })
+            .auth(inode[0].username, inode[0].password, false);
+        });
+    });
 
     /*
      * GET json data from IIB API
