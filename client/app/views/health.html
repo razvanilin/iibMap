@@ -3,13 +3,62 @@
 	<h1>Health</h1>
 	<div class="row">
 		<div class="form-group">
-			<div class="col-md-offset-1 col-md-4 input-group">
+			<div class="col-md-offset-3 col-md-6 col-xs-12 input-group">
 				<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
 				<input type="text" ng-model="searchquery" class="form-control" id="inputSearchquery" placeholder="Search">
 			</div>
 		</div>
 	</div>
+
 	<div class="row">
+		<h1 ng-show="isLoading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate glyphicon-refresh-animate-main"></span></h1>
+		<div class="col-md-offset-2 col-md-8 col-xs-12">
+		<accordion close-others="false">
+			<accordion-group is-open="true" ng-repeat="node in topology.children | filter: {name: searchquery} | orderBy: 'name'">
+		        <accordion-heading>
+		            <span>{{node.name}}</span> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+		        </accordion-heading>
+		        <p>Integration Servers</p>
+
+		        <accordion-group is-disabled="!eg.children" ng-repeat="eg in node.children">
+		        	<accordion-heading>
+		        		<span ng-class="eg.isRunning ? 'text-success' : 'text-danger'">
+			        		<span ng-show="!eg.isRunning" class="glyphicon glyphicon-remove-sign" style="float:left;"></span>
+							<span ng-show="eg.isRunning" class="glyphicon glyphicon-ok-sign" style="float:left;"></span>
+			        		 <strong>{{eg.name}}</strong>
+		        		</span> <i ng-show="eg.children" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+		        	</accordion-heading>
+		        	<p>Message Flows and Applications</p>
+
+		        	<accordion-group is-disabled="!flow.children" ng-repeat="flow in eg.children">
+		        		<accordion-heading ng-class="panel-success">
+		        			<span ng-class="eg.isRunning ? 'text-success' : 'text-danger'">
+			        			<span ng-show="!flow.isRunning" class="glyphicon glyphicon-remove-sign" style="float:left;"></span>
+								<span ng-show="flow.isRunning" class="glyphicon glyphicon-ok-sign" style="float:left;"></span>
+				        		 <strong>{{flow.name}}</strong>
+				        	</span> <i ng-show="flow.children" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+			        	</accordion-heading>
+			        	<p>Message Flows</p>
+
+			        	<accordion-group is-disabled="!appflow.children" ng-repeat="appflow in flow.children">
+			        		<accordion-heading ng-class="panel-success">
+				        		<span ng-class="appflow.isRunning ? 'text-success' : 'text-danger'">
+				        			<span ng-show="!appflow.isRunning" class="glyphicon glyphicon-remove-sign" style="float:left;"></span>
+									<span ng-show="appflow.isRunning" class="glyphicon glyphicon-ok-sign" style="float:left;"></span>
+					        		<strong>{{appflow.name}}</strong>
+					        	</span> <i ng-show="appflow.children" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+				        	</accordion-heading>
+			        	</accordion-group>
+		        	</accordion-group>
+
+		        </accordion-group>
+		    </accordion-group>
+	    </accordion>
+	    </div>
+	</div>
+
+
+	<!--div class="row">
 		<h1 ng-show="isLoading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate glyphicon-refresh-animate-main"></span></h1>
 		<ul class="list-group" style="width:85%;margin-left:auto;margin-right:auto">
 			<li class="list-group-item" style="background-color:#6F7987;border:none" ng-repeat="node in topology.children | filter: {name: searchquery} | orderBy: 'name'">
@@ -31,5 +80,5 @@
 				</ul>
 			</li>
 		</ul>
-	</div>
+	</div-->
 </div>

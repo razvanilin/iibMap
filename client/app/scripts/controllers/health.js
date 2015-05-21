@@ -8,18 +8,22 @@
  * Controller of the iibHeatMapApp
  */
 
- angular.module('iibHeatMapApp')
- 	.controller('HealthCtrl', function($scope, INode) {
- 		$scope.health = {};
- 		$scope.isLoading = true;
- 		$scope.searchquery = "";
+angular.module('iibHeatMapApp')
+    .controller('HealthCtrl', function($scope, INode) {
+        $scope.health = {};
+        $scope.isLoading = true;
+        $scope.searchquery = "";
+        $scope.status = {
+            isFirstOpen: true,
+            isFirstDisabled: false
+        };
 
- 		//used for the navbar active selection
- 		$scope.viewHealth = true;
+        //used for the navbar active selection
+        $scope.viewHealth = true;
 
- 		INode.one('topology').get().then(function(inodes) {
- 			$scope.topology = inodes;
- 			$scope.isLoading = false;
- 			console.log($scope.topology);
- 		});
- 	});
+        INode.one('topology').get().then(function(inodes) {
+            $scope.topology = inodes;
+            $scope.isLoading = false;
+            console.log($scope.topology);
+        });
+    });

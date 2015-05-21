@@ -24,7 +24,6 @@ angular.module('iibHeatMapApp')
     		$scope.inodes[k].confirmDelete = false;
     	}
     	console.log($scope.inodes);
-
     });
 
     $scope.confirm = function(id) {

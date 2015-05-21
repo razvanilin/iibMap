@@ -15,7 +15,9 @@ angular
         'restangular',
         'ui.bootstrap',
         'toggle-switch',
-        'autofocus'
+        'autofocus',
+        'ui.bootstrap.accordion',
+        'ui.bootstrap.tpls'
     ])
     .constant("CONFIG", {
         "API_HOST": "http://localhost:8080",
