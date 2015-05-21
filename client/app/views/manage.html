@@ -1,6 +1,10 @@
 <ng-include src="'views/navbar.html'"></ng-include>
 <div class="container-fluid container-panel top-buffer-lg">
 	<div class="row">
+		<h1>Manage the Integration Nodes</h1>
+	</div>
+	<div class="row">
+		<div class="table-responsive">
 		<table class="table" style="text-align: left;">
 			<thead>
 				<tr>
@@ -19,7 +23,7 @@
 					<td>{{ inode.port }}</td>
 					<td>{{ inode.ssl }}</td>
 					<td>
-						<toggle-switch ng-model="inode.isActive" ng-change="changeStatus(inode._id)"><toggle-switch>
+						<toggle-switch ng-model="inode.isActive" ng-change="changeStatus(inode._id)"></toggle-switch>
 					</td>
 					<td style="width:200px;">
 						<button class="btn btn-default" ng-click="editNode(inode._id)"><span class="glyphicon glyphicon-pencil"></span></button>
@@ -29,6 +33,6 @@
 				</tr>
 			</tbody>
 		</table>
-
+		</div>
 	</div>
 </div>
