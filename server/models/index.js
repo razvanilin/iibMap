@@ -1,3 +1,4 @@
 module.exports = {
-	inode: require('./INode.js')
+	inode: require('./INode.js'),
+	service: require('./Service.js')
 };
