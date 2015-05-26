@@ -40,16 +40,20 @@ angular
                 controller: 'HealthCtrl'
             })
             .when('/manage', {
-              templateUrl: 'views/manage.html',
-              controller: 'ManageCtrl'
+                templateUrl: 'views/manage.html',
+                controller: 'ManageCtrl'
             })
             .when('/manage/addNode', {
-              templateUrl: 'views/add-node.html',
-              controller: 'AddNodeCtrl'
+                templateUrl: 'views/add-node.html',
+                controller: 'AddNodeCtrl'
             })
             .when('/manage/editNode/:id', {
-              templateUrl: 'views/edit-node.html',
-              controller: 'EditNodeCtrl'
+                templateUrl: 'views/edit-node.html',
+                controller: 'EditNodeCtrl'
+            })
+            .when('/services', {
+                templateUrl: 'views/services.html',
+                controller: 'ServicesCtrl'
             })
             .otherwise({
                 redirectTo: '/'
@@ -63,13 +67,22 @@ angular
         });
     })
     .factory('INode', function(INodeRestangular, CONFIG) {
-        return INodeRestangular.service(CONFIG.API_ROUTE+'/inode');
+        return INodeRestangular.service(CONFIG.API_ROUTE + '/inode');
+    })
+    .factory('ServiceRestangular', function(Restangular) {
+        return Restangular.withConfig(function(RestangularConfigurer) {
+            RestangularConfigurer.setRestangularFields({
+                id: '_id'
+            });
+        });
+    })
+    .factory('Service', function(ServiceRestangular, CONFIG) {
+        return ServiceRestangular.service(CONFIG.API_ROUTE + '/service');
     })
     .factory('ResourceDetails', function() {
         var resource = {
             resource: {}
-        };  
+        };
 
         return resource;
     });
-    
