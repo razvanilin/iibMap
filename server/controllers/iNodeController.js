@@ -1,6 +1,7 @@
 var restful = require('node-restful');
 var async = require('async');
 var request = require('request');
+var config = require('./../config')
 
 var chartData = {
     "name": "IIB",
@@ -46,7 +47,7 @@ module.exports = function(app, route) {
                     // if there's an error it means that the node is not regstered so the POST is OK
                     console.log(inode.length);
                     if (err || inode.length == 0) {
-                        next();
+                        return next();
                     }
 
                     return res.status(400).send("The node is already registerd with the application.");
@@ -62,7 +63,7 @@ module.exports = function(app, route) {
     /*
      * Change the status of the node (active or not)
      */
-    app.put('/inode/:id/status', function(req, res, next) {
+    app.put(config.apiRoute+'/inode/:id/status', function(req, res, next) {
         INode.findOne({
             _id: req.params.id
         }).exec(function(err, inode) {
@@ -82,13 +83,13 @@ module.exports = function(app, route) {
     /*
      * GET the integration nodes topology
      */
-    app.get('/inode/topology', iibLayout);
+    app.get(config.apiRoute+'/inode/topology', iibLayout);
 
 
     /*
      * GET the integration servers of a certain integration node :id
      */
-    app.get('/inode/:id/iservers', function(req, res, next) {
+    app.get(config.apiRoute+'/inode/:id/iservers', function(req, res, next) {
 
         // get the integration node data from the local api database
         INode.find({
@@ -114,7 +115,7 @@ module.exports = function(app, route) {
      * GET a single integration server from the API
      */
 
-    app.get('/inode/:id/iservers/:iserver', function(req, res, next) {
+    app.get(config.apiRoute+'/inode/:id/iservers/:iserver', function(req, res, next) {
         INode.find({
             _id : req.params.id,
             isActive: true
@@ -138,7 +139,7 @@ module.exports = function(app, route) {
      *  GET a single message flow from the API
      */
 
-    app.get('/inode/:id/iservers/:iserver/messageflows/:messageflow', function(req, res, next) {
+    app.get(config.apiRoute+'/inode/:id/iservers/:iserver/messageflows/:messageflow', function(req, res, next) {
         INode.find({
             _id: req.params.id,
             isActive: true
@@ -161,7 +162,7 @@ module.exports = function(app, route) {
      * GET a single application from the API
      */
 
-    app.get('/inode/:id/iservers/:iserver/applications/:application', function(req, res, next) {
+    app.get(config.apiRoute+'/inode/:id/iservers/:iserver/applications/:application', function(req, res, next) {
         INode.find({
             _id: req.params.id,
             isActive: true
@@ -183,7 +184,7 @@ module.exports = function(app, route) {
      * GET a single message flow from inside of an application
      */
 
-    app.get('/inode/:id/iservers/:iserver/applications/:application/messageflows/:messageflow', function(req, res, next) {
+    app.get(config.apiRoute+'/inode/:id/iservers/:iserver/applications/:application/messageflows/:messageflow', function(req, res, next) {
         INode.find({
             _id: req.params.id,
             isActive: true

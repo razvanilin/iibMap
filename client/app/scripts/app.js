@@ -21,7 +21,8 @@ angular
     ])
     .constant("CONFIG", {
         "API_HOST": "http://localhost:8080",
-        "TOPOLOGY": "http://localhost:8080/inode/topology"
+        "TOPOLOGY": "http://localhost:8080/apiv0/inode/topology",
+        "API_ROUTE": "apiv0"
     })
     .config(function($routeProvider, RestangularProvider, CONFIG) {
         RestangularProvider.setBaseUrl(CONFIG.API_HOST);
@@ -61,8 +62,8 @@ angular
             });
         });
     })
-    .factory('INode', function(INodeRestangular) {
-        return INodeRestangular.service('inode');
+    .factory('INode', function(INodeRestangular, CONFIG) {
+        return INodeRestangular.service(CONFIG.API_ROUTE+'/inode');
     })
     .factory('ResourceDetails', function() {
         var resource = {
