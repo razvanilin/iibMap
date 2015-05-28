@@ -1,6 +1,6 @@
-# IIB Heat Map App #
+# IBM Integration Bus Map App #
 
-A heat map App for IIB built using MEAN stack: MongoDB, ExpressJS, AngularJS and Node.js. The app is split into two, the server API and the Angular app.
+A map app for IIB built using the MEAN stack: MongoDB, ExpressJS, AngularJS and Node.js. The app is split into two, the server API and the Angular app.
 
 ## Dev Environment Set-Up ##
 
@@ -48,7 +48,7 @@ gem install compass
 * Clone the repository on your machine
 
 ```
-git clone https://git.hursley.ibm.com/razvanilin/iibHeatMapApp.git
+git clone git@github.com:razvanilin/iibMap.git
 ```
 
 * Navigate to the project folder and begin setup
@@ -100,7 +100,7 @@ connect: {
 
 ```
 .constant("CONFIG", {
-        "API_HOST" : "your-api-host:port",
+        "API_HOST" : "your-api-host",
     })
 ```
 
