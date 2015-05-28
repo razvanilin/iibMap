@@ -134,7 +134,7 @@ var CircleChart = Class.create({
             var text = svg.selectAll("text")
                 .data(nodes)
                 .enter().append("text")
-                .attr("class", "label")
+                .attr("class", "chart-label")
                 .style("fill-opacity", function(d) {
                     return d.parent === root ? 1 : 0;
                 })

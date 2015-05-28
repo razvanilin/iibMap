@@ -1,6 +1,64 @@
 <ng-include src="'views/navbar.html'"></ng-include>
 <div class="container-fluid container-panel top-buffer-lg">
+
+	
+	
+
+
 	<div class="row">
+		<button class="btn btn-lg btn-default" ng-click="goBack()" style="position:absolute;left:5%"><span class="glyphicon glyphicon-circle-arrow-left"></span> Back</button>
 		<h1>Add Service</h1>
 	</div>
+
+	<div class="row">
+		<form role="form" class="form-horizontal">
+			<div class="form-group">
+				<label for="inputName" class="col-md-4 control-label">Name*</label>
+				<div class="col-md-4">
+					<input type="text" ng-model="service.name" class="form-control" id="inputName" placeholder="Service Name" required autofocus>
+				</div>
+			</div>
+
+			<div ng-show="service.name.length > 0" class="form-group top-buffer-sm">
+				<div class="col-md-offset-4 col-md-4">
+					<button type="button" class="btn btn-lg btn-default" ng-click="selectFlows()"><span ng-show="flowsLoading" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Select Flows</button>
+				</div>
+			</div>
+
+			<div ng-show="flows.length > 0" class="row">
+				<div class="form-group">
+					<div class="col-md-offset-5 col-md-2 col-xs-12 input-group">
+						<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+						<input type="text" ng-model="searchquery" class="form-control" id="inputSearchquery" placeholder="Search">
+					</div>
+				</div>
+			</div>
+
+			<div ng-show="flows.length > 0" class="form-group">
+				<div class="col-md-offset-2 col-md-8" style="height:400px;overflow:auto;">
+					<div class="list-group">
+					  <a ng-repeat="flow in flows | filter: {name: searchquery}" ng-click="makeSelection(flow.id)" href="" class="list-group-item" ng-class="{'list-group-item-success': flow.selected}" >
+					  	<p>
+						    <span>Node: <span class="label label-primary">{{flow.inodeName}}</span>  </span>
+						    <span>Server: <span class="label label-success">{{flow.iserver}}</span>  </span>
+					    	<span ng-show="flow.application.length > 0">Application: <span class="label label-danger">{{flow.application}}</span>  </span>
+					    </p>
+					    <br>
+					    <p>Flow: <strong>{{flow.name}}</strong></p>
+
+					    <span ng-show="flow.selected" class="glyphicon glyphicon-ok" style="position:absolute;right:1%;top:40%;"></span>
+					  </a>
+					</div>
+				</div>
+			</div>
+
+			<div ng-show="flows.length > 0" class="form-group">
+				<div class="col-md-offset-4 col-md-4">
+					<button type="submit" class="btn btn-lg btn-default" ng-click="addService()"><span ng-show="addLoading" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Add Service</button>
+				</div>
+			</div>
+			<div class="alert alert-danger" ng-show="error">{{ error }}</div>
+		</form>
+
+
 </div>

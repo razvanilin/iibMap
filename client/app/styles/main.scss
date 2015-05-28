@@ -113,6 +113,7 @@ h3 {
   background: #1D2946;
   padding-left: 60px;
   padding-right: 60px;
+  padding-bottom: 60px;
   margin-left: 30px;
   margin-right: 30px;
   border-radius: 6px;
@@ -172,7 +173,7 @@ h3 {
   fill: white;
 }
 
-.label {
+.chart-label {
   /*font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;*/
   text-anchor: middle;
   text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
@@ -189,7 +190,7 @@ h3 {
   text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
 }
 
-.label,
+.chart-label,
 /*.node--root*/
 /*.node--leaf*/ {
   pointer-events: none;
@@ -460,4 +461,14 @@ path {
 @keyframes spin {
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
+}
+
+/* END Spinner */
+
+.ng-show-add, .ng-show-remove {
+  transition: all 1s ease !important;
+}
+
+.ng-show-add-active, .ng-show-remove-active {
+  transition: all 1s ease !important;
 }

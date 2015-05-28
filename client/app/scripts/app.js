@@ -12,6 +12,7 @@ angular
     .module('iibHeatMapApp', [
         'ngResource',
         'ngRoute',
+        'ngAnimate',
         'restangular',
         'ui.bootstrap',
         'toggle-switch',
