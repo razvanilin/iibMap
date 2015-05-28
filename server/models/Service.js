@@ -19,9 +19,14 @@ var ServiceSchema = new mongoose.Schema({
 			required: true
 		},
 		application: {
-			type: String
+			type: String,
+			default: ""
 		}
-	}]
+	}],
+	isActive: {
+		type: Boolean,
+		default: true
+	}
 });
 
 module.exports = ServiceSchema;

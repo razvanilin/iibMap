@@ -1,6 +1,38 @@
 <ng-include src="'views/navbar.html'"></ng-include>
 <div class="container-fluid container-panel top-buffer-lg">
 	<div class="row">
-		<h1>Services</h1>
+		<h1>Manage Services</h1>
 	</div>
+
+	<div class="row">
+		<a class="btn btn-lg btn-success" ng-href="#/services/add"><span class="glyphicon glyphicon-plus"></span> Add Service</a>
+	</div>
+
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8 table-responsive">
+		<table class="table" style="text-align: left;">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Size</th>
+					<th>Status</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="service in services">
+					<td>{{service.name}}</td>
+					<td>{{service.flows.length}} Flows</td>
+					<td>
+						<toggle-switch ng-model="service.isActive" ng-change=""></toggle-switch>
+					</td>
+					<td style="width:200px;">
+						<button class="btn btn-default" ng-click=""><span class="glyphicon glyphicon-pencil"></span></button>
+						<button ng-show="!inode.confirmDelete" ng-click="" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button> 
+						<button ng-show="inode.confirmDelete" ng-click="" class="btn btn-danger">Are you sure?</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
 </div>

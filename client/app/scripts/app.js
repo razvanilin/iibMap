@@ -55,6 +55,10 @@ angular
                 templateUrl: 'views/services.html',
                 controller: 'ServicesCtrl'
             })
+            .when('/services/add', {
+              templateUrl: 'views/add-service.html',
+              controller: 'AddserviceCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

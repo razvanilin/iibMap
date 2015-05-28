@@ -9,7 +9,7 @@ module.exports = function(app, route) {
 		app.models.service
 	).methods(['get', 'put', 'post', 'delete']);
 
-	//register this endpoint with the application
+	// register this endpoint with the application
 	Service.register(app, route);	
 
     // return middleware
