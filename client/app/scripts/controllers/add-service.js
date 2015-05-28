@@ -8,7 +8,7 @@
  * Controller of the iibHeatMapApp
  */
 angular.module('iibHeatMapApp')
-    .controller('AddserviceCtrl', function($scope, $location, INode) {
+    .controller('AddserviceCtrl', function($scope, $location, INode, Service) {
         $scope.viewServices = true;
         $scope.error = false;
         $scope.searchquery = "";
@@ -83,9 +83,14 @@ angular.module('iibHeatMapApp')
 
             if ($scope.service.flows.length < 1) {
             	$scope.error = "Please select at least one Message Flow";
+            } else {
+            	// REST
+            	Service.post($scope.service).then(function(data) {
+            		console.log(data);
+            	}, function(response) {
+            		console.error(response);
+            	});
             }
-
-            //REST
 
             $scope.addLoading = false;
             console.log($scope.service.flows);
