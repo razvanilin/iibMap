@@ -26,7 +26,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="service in services | filter: {name: searchquery}">
+					<tr ng-repeat="service in services | filter: {name: searchquery} | orderBy: 'name'">
 						<td>
 							<span ng-class="{'glyphicon glyphicon-ok-sign text-success': service.health == 2, 'glyphicon glyphicon-exclamation-sign text-warning': service.health == 1, 'glyphicon glyphicon-remove-sign text-danger': service.health == 0}"></span> 
 							{{service.name}}
