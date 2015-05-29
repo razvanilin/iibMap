@@ -1,7 +1,7 @@
 var restful = require('node-restful');
 var async = require('async');
 var request = require('request');
-var config = require('./../config')
+var config = require('./../config');
 
 var chartData = {
     "name": "IIB",

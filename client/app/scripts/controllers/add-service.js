@@ -35,6 +35,7 @@ angular.module('iibHeatMapApp')
                                 $scope.flows.push({
                                     id: flowIndex,
                                     name: inodes[i].children[iserver].children[flow].name,
+                                    isRunning: inodes[i].children[iserver].children[flow].isRunning,
                                     iserver: inodes[i].children[iserver].name,
                                     inode: inodes[i].id,
                                     inodeName: inodes[i].name,
@@ -47,6 +48,7 @@ angular.module('iibHeatMapApp')
                                     $scope.flows.push({
                                         id: flowIndex,
                                         name: inodes[i].children[iserver].children[flow].children[app].name,
+                                        isRunning: inodes[i].children[iserver].children[flow].children[app].isRunning,
                                         iserver: inodes[i].children[iserver].name,
                                         inode: inodes[i].id,
                                         inodeName: inodes[i].name,
