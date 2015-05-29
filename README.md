@@ -63,25 +63,15 @@ npm install
 bower install
 ```
 
-* Edit API port, db host and name (server/index.js)
+* Edit API port, db host and other config (server/config.js)
 
 ```
-mongoose.connect('mongodb://localhost/heatmap');
-mongoose.connection.once('open', function() {
-
-        // Load the models
-        app.models = require('./models/index');
-
-        // Load the routes
-        var routes = require('./routes');
-
-        _.each(routes, function(controller, route) {
-                app.use(route, controller(app, route));
-        });
-
-        console.log('Listening on port 8080...');
-        app.listen(8080);
-});
+module.exports = {
+    dbhost: 'mongodb://localhost/heatmap',
+    port: 8080,
+    secret: 'place-your-key-here',
+    apiRoute: '/apiv0'
+};
 ```
 
 * Edit the IP address and port for the front-end application (client/Gruntfile.js)
@@ -100,7 +90,9 @@ connect: {
 
 ```
 .constant("CONFIG", {
-        "API_HOST" : "your-api-host",
+        "API_HOST": "http://localhost:8080",
+        "TOPOLOGY": "http://localhost:8080/apiv0/inode/topology",
+        "API_ROUTE": "apiv0"
     })
 ```
 
