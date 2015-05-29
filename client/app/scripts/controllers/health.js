@@ -9,21 +9,31 @@
  */
 
 angular.module('iibHeatMapApp')
-    .controller('HealthCtrl', function($scope, INode) {
+    .controller('HealthCtrl', function($scope, Service) {
         $scope.health = {};
         $scope.isLoading = true;
         $scope.searchquery = "";
-        $scope.status = {
+        $scope.services = [];
+
+         //used for the navbar active selection
+        $scope.viewHealth = true;
+
+        Service.one('health').get().then(function(services) {
+            $scope.services = services;
+            $scope.isLoading = false;
+            console.log(services);
+        });
+
+        /*$scope.status = {
             isFirstOpen: true,
             isFirstDisabled: false
         };
 
-        //used for the navbar active selection
-        $scope.viewHealth = true;
+       
 
         INode.one('topology').get().then(function(inodes) {
             $scope.topology = inodes;
             $scope.isLoading = false;
             console.log($scope.topology);
-        });
+        });*/
     });
