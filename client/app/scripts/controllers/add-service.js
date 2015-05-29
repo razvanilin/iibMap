@@ -89,6 +89,7 @@ angular.module('iibHeatMapApp')
             	// REST
             	Service.post($scope.service).then(function(data) {
             		console.log(data);
+            		$location.path("services");
             	}, function(response) {
             		console.error(response);
             	});

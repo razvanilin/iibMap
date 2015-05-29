@@ -24,12 +24,10 @@
 					<td>{{service.name}}</td>
 					<td>{{service.flows.length}} Flows</td>
 					<td>
-						<toggle-switch ng-model="service.isActive" ng-change=""></toggle-switch>
+						<toggle-switch ng-model="service.isActive" ng-change="changeStatus(service._id)"></toggle-switch>
 					</td>
 					<td style="width:200px;">
-						<button class="btn btn-default" ng-click=""><span class="glyphicon glyphicon-pencil"></span></button>
-						<button ng-show="!inode.confirmDelete" ng-click="" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button> 
-						<button ng-show="inode.confirmDelete" ng-click="" class="btn btn-danger">Are you sure?</button>
+						<button ng-click="deleteService(service._id)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button> 
 					</td>
 				</tr>
 			</tbody>

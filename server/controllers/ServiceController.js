@@ -32,6 +32,26 @@ module.exports = function(app, route) {
         });
     });
 
+    /*
+     * Change the status of the service (active or not)
+     */
+    app.put(config.apiRoute+'/service/:id/status', function(req, res, next) {
+        Service.findOne({
+            _id: req.params.id
+        }).exec(function(err, service) {
+            if (err) res.status(404).send('Service not found');
+
+            service.isActive = req.body.isActive;
+
+            service.save(function(err) {
+                if(err) {
+                    return res.status(400).send('The Service was not updated');
+                } 
+                return res.status(200).send('The Service was updated');
+            });
+        });
+    });
+
     var servicesChecked = 0;
     var servicesHealth = [];
 
