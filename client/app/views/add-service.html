@@ -35,7 +35,8 @@
 			</div>
 
 			<div ng-show="flows.length > 0" class="form-group">
-				<div class="col-md-offset-2 col-md-8" style="height:400px;overflow:auto;">
+				
+				<div class="col-md-offset-2 col-md-7" style="max-height:400px;overflow:auto;">
 					<div class="list-group">
 					  <a ng-repeat="flow in flows | filter: {name: searchquery}" ng-click="makeSelection(flow.id)" href="" class="list-group-item" ng-class="{'list-group-item-success': flow.selected}" >
 					  	<p>
@@ -49,6 +50,10 @@
 					    <span ng-show="flow.selected" class="glyphicon glyphicon-ok" style="position:absolute;right:1%;top:40%;"></span>
 					  </a>
 					</div>
+				</div>
+				<h3>Selected Flows</h3>
+				<div class="col-md-3" style="font-size: 30px;max-height:350px;overflow:auto;">
+					<p ng-repeat="flow in flows | filter: {selected: true}"><span class="label label-primary">{{flow.name}}</span> <button class="btn btn-sm btn-danger" ng-click="makeSelection(flow.id)"><span class="glyphicon glyphicon-remove"></span></button></p>
 				</div>
 			</div>
 
