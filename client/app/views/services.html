@@ -20,7 +20,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="service in services">
+				<tr ng-repeat="service in services | orderBy: 'name'">
 					<td>{{service.name}}</td>
 					<td>{{service.flows.length}} Flows</td>
 					<td>

@@ -62,6 +62,6 @@ angular.module('iibHeatMapApp')
         }
 
         $scope.goBack = function() {
-            $location.path('manage');
+            $location.path('inodes');
         }
     });

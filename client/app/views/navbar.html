@@ -17,16 +17,15 @@
             <li ng-class="{'active':viewHealth}">
               <a ng-href="#/health">Health</a>
             </li>
-            <li ng-class="{'active':viewManage || viewAddNode}">
-              <a ng-href="#/manage">Manage INodes</a>
-            </li>
-            <li ng-class="{'active':viewServices}">
-              <a ng-href="#/services">Services</a>
-            </li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-            <li ng-show="viewManage"><a ng-href="#/manage/addNode"><span class="glyphicon glyphicon-plus" style="font-size:99%;"></span> Add Node</a></li>
+            <li ng-class="{'active':viewManage || viewAddNode}">
+              <a ng-href="#/inodes">Manage INodes</a>
+            </li>
+            <li ng-class="{'active':viewServices}">
+              <a ng-href="#/services">Manage Services</a>
+            </li>
             <li style="padding:20px;"></li>
             <li><a href="#/" style="height:10px;"><img src="/images/logo-ibm.png"/ style="height:30px;padding-bottom:10px"></a></li>
           </ul>

@@ -67,7 +67,7 @@ angular.module('iibHeatMapApp')
     };
 
     $scope.editNode = function(id) {
-        $location.path('manage/editNode/'+id);
+        $location.path('inodes/edit/'+id);
     }
 
     /*

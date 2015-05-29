@@ -40,15 +40,15 @@ angular
                 templateUrl: 'views/health.html',
                 controller: 'HealthCtrl'
             })
-            .when('/manage', {
+            .when('/inodes', {
                 templateUrl: 'views/manage.html',
                 controller: 'ManageCtrl'
             })
-            .when('/manage/addNode', {
+            .when('/inodes/add', {
                 templateUrl: 'views/add-node.html',
                 controller: 'AddNodeCtrl'
             })
-            .when('/manage/editNode/:id', {
+            .when('/inodes/edit/:id', {
                 templateUrl: 'views/edit-node.html',
                 controller: 'EditNodeCtrl'
             })

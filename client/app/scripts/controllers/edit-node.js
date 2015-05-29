@@ -49,7 +49,7 @@ angular.module('iibHeatMapApp')
                     $scope.addLoading = false;
                     $scope.addSuccess = "Node updated Successfully.";
 
-                    $location.path('manage');
+                    $location.path('inodes');
                 }, function(response) {
                     if (response.status === 404) {
                         $scope.notFound = response.data;
@@ -64,6 +64,6 @@ angular.module('iibHeatMapApp')
         }
 
         $scope.goBack = function() {
-            $location.path('manage');
+            $location.path('inodes');
         }
     });
