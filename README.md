@@ -124,3 +124,35 @@ grunt serve
 
 # Play with it #
 You can access the application at the address you placed in Gruntfile.js 
+
+# Deploy it #
+Not quite ready for production but, hey, it can be done!
+
+* You need a webserver for this - I use Apache
+* You have to build the front end application
+```
+cd client/
+grunt build
+```
+* A `dist` folder was created in the `client/` and we need to point Apache to it. Below is an example of the Apache configuration
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+
+        DocumentRoot /var/www/iibMap/client/dist
+
+        <Directory /var/www/iibMap/client/dist>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+        </Directory>
+</VirtualHost>
+```
+* After doing this make sure you restart Apache with `service apache2 restart` or `systemctl restart httpd`
+* And the last bit is to start your Node API
+```
+cd server/
+node index
+```
+### That's it, you should be able to go to yourawesomewebsite.com and play with the applicaiton ###
