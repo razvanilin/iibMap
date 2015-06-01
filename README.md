@@ -48,7 +48,7 @@ gem install compass
 * Clone the repository on your machine
 
 ```
-git clone git@github.com:razvanilin/iibMap.git
+git clone https://github.com/razvanilin/iibMap.git
 ```
 
 * Navigate to the project folder and begin setup
@@ -121,3 +121,6 @@ node index
 cd client/
 grunt serve
 ```
+
+# Play with it #
+You can access the application at the address you placed in Gruntfile.js 
