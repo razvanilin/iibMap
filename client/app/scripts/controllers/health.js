@@ -13,6 +13,8 @@ angular.module('iibHeatMapApp')
         $scope.health = {};
         $scope.isLoading = true;
         $scope.searchquery = "";
+        $scope.healthQuery = "";
+
         $scope.services = [];
 
          //used for the navbar active selection
@@ -23,6 +25,16 @@ angular.module('iibHeatMapApp')
             $scope.isLoading = false;
             console.log(services);
         });
+
+        $scope.changeHealthQuery = function(value) {
+            console.log($scope.healthQuery);
+            // workaround on getting the All radio button selected first
+            $scope.healthQuery = value - 1;
+
+            if(value == 0) {
+                $scope.healthQuery = "";
+            }
+        };
 
         /*$scope.status = {
             isFirstOpen: true,
