@@ -11,9 +11,13 @@
  angular.module('iibHeatMapApp')
  	.controller('ChartCtrl', function($scope, INode, ResourceDetails, CONFIG) {
  		$scope.resource = {};
- 		$scope.topology = CONFIG.TOPOLOGY;
+ 		//$scope.topology = {};
  		$scope.selectedElement = "";
  		$scope.showResources = false;
+
+ 		INode.one('topology').get().then(function(data) {
+ 			$scope.topology = data;
+ 		});
 
  		// used for the navbar active selection
  		$scope.viewChart = true;

@@ -6,10 +6,10 @@ angular.module('iibHeatMapApp')
                 datajson: '='
             },
             require: '^ngController',
-            link: function(scope, elem, attrs, ChartCtrl) {
+            link: function(scope, elem, attrs, Ctrl) {
 
                 var circleChart = new CircleChart(scope.datajson);
-                circleChart.initialise(scope.datajson, ChartCtrl);
+                circleChart.initialise(scope.datajson, Ctrl);
                 var svg = circleChart.generateGraph();
                 svg = angular.element(svg);
                 //scope.isLoading = true;
@@ -64,10 +64,10 @@ var CircleChart = Class.create({
             .append("g")
             .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-        d3.json(this.datajson, function(error, root) {
-
+        //d3.json(this.datajson, function(error, root) {
+            var root = this.datajson;
             console.log(root);
-            if (error) return console.error(error);
+            //if (error) return console.error(error);
 
             // check if there was an error response from the server
             if (root['code']) {
@@ -206,7 +206,7 @@ var CircleChart = Class.create({
             // compile the elements so the ng-click event fires properly
             return $("#chart-content").prop('outerHTML');
 
-        });
+        //});
 
         d3.select(self.frameElement).style("height", diameter + "px");
         return $('#chart-content').prop('outerHTML');
