@@ -17,7 +17,7 @@ angular
         'ui.bootstrap',
         'toggle-switch',
         'autofocus',
-        'ui.bootstrap.accordion',
+        'ui.bootstrap.dropdown',
         'ui.bootstrap.tpls'
     ])
     .constant("CONFIG", {

@@ -12,19 +12,22 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li ng-class="{'active':viewChart}">
-              <a ng-href="#/chart">Chart View</a>
+              <a ng-href="#/chart"><span class="glyphicon glyphicon-th"></span> Chart View</a>
             </li>
             <li ng-class="{'active':viewHealth}">
-              <a ng-href="#/health">Health</a>
+              <a ng-href="#/health"><span class="glyphicon glyphicon-plus-sign"></span> Health</a>
             </li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-            <li ng-class="{'active':viewManage || viewAddNode}">
-              <a ng-href="#/inodes">Manage INodes</a>
-            </li>
-            <li ng-class="{'active':viewServices}">
-              <a ng-href="#/services">Manage Services</a>
+            <li dropdown ng-class="{'active':viewManage || viewAddNode || viewServices}">
+              <a class="dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+              <span class="glyphicon glyphicon-cog"></span>  Manage <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a ng-href="#/inodes">Integration Nodes</a></li>
+                <li><a ng-href="#/services">Services</a></li>
+              </ul>
             </li>
             <li style="padding:20px;"></li>
             <li><a href="#/" style="height:10px;"><img src="/images/logo-ibm.png"/ style="height:30px;padding-bottom:10px"></a></li>
