@@ -11,7 +11,6 @@
  angular.module('iibHeatMapApp')
  	.controller('ChartCtrl', function($scope, INode, ResourceDetails, CONFIG) {
  		$scope.resource = {};
- 		//$scope.topology = {};
  		$scope.selectedElement = "";
  		$scope.showResources = false;
 
@@ -23,6 +22,7 @@
  		$scope.viewChart = true;
 
  		this.getResources = function(inodeId, iserver, application, messageflow, type, name) {
+ 			$scope.resource = {};
  			$scope.resourceLoading = true;
  			$scope.selectedElement = name;
  			$scope.resource.type = type;

@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12" >
   <h4>Message Flows</h4>
-  <p ng-class="messageflow.isRunning ? 'text-success' : 'text-danger'" ng-repeat="messageflow in resource.messageFlows.messageFlow | orderBy: '-isRunning'"><strong>{{messageflow.name}}</strong></p>
+  <p style="text-align: center;" ng-repeat="messageflow in resource.messageFlows.messageFlow | orderBy: '-isRunning'"><span class="label" ng-class="messageflow.isRunning ? 'label-success' : 'label-danger'">{{messageflow.name}}</span></p>
 </div>

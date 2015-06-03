@@ -38,7 +38,15 @@
                 <div class="tab-content">
                   <div role="tabpanel" class="tab-pane fade in active" id="resources">
                     <h3><small><span ng-show="resourceLoading" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></small>{{ selectedElement }}</h3>
-                    <p ng-show="resource.type != 'inode'" ng-class="resource.isRunning ? 'text-success' : 'text-danger'"><strong>{{resource.isRunning ? 'Running' : 'Not running'}}</strong></p>
+                    <p ng-show="resource.type != 'inode'" ng-class="resource.isRunning ? 'text-success' : 'text-danger'">
+                      <span ng-class="resource.isRunning ? 'glyphicon glyphicon-ok-sign' : 'glyphicon glyphicon-remove-sign'"></span>
+                      <strong>{{resource.isRunning ? 'Running' : 'Not running'}}</strong>
+                    </p>
+
+                    <ng-include ng-show="resource.type == 'inode'" src="'views/inode/inode-properties.html'"></ng-include>
+                    <ng-include ng-show="resource.type == 'iserver'" src="'views/iserver/iserver-properties.html'"></ng-include>
+                    <ng-include ng-show="resource.type == 'application'" src="'views/application/application-properties.html'"></ng-include>
+                    <ng-include ng-show="resource.type == 'messageflow'" src="'views/messageflow/messageflow-properties.html'"></ng-include>
                   </div>
 
                   <div role="tabpanel" class="tab-pane fade" id="details1">

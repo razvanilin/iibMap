@@ -112,8 +112,8 @@ module.exports = function(app, route) {
                             var data = JSON.parse(body);
 
                             if (!er) data.properties = JSON.parse(properties);
-                            
-                            res.status(200).send(JSON.parse(body)['executionGroup']);                            
+
+                            res.status(200).send(data);                            
                         })
                         .auth(inode[0].username, inode[0].password, false);
                     }
