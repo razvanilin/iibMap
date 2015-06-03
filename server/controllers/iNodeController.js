@@ -100,12 +100,23 @@ module.exports = function(app, route) {
 
             // build the IIB api url
             var apiPath = "/apiv1/executiongroups";
+            var apiPathProperties = "/apiv1/properties";
 
             var options = getOptions(inode[0], apiPath, 'GET');
+            var optionsProperties = getOptions(inode[0], apiPathProperties, 'GET');
             // Make a request to the IIB API
             request(options, function(error, resp, body) {
                     if (error) res.status(404).send('Integration node not found');
-                    else res.status(200).send(JSON.parse(body)['executionGroup']);
+                    else {
+                        request(optionsProperties, function(er, response, properties) {
+                            var data = JSON.parse(body);
+
+                            if (!er) data.properties = JSON.parse(properties);
+                            
+                            res.status(200).send(JSON.parse(body)['executionGroup']);                            
+                        })
+                        .auth(inode[0].username, inode[0].password, false);
+                    }
                 })
                 .auth(inode[0].username, inode[0].password, false);
         });
@@ -124,12 +135,22 @@ module.exports = function(app, route) {
 
             // build the IIB api url
             var apiPath = "/apiv1/executiongroups/" + req.params.iserver + "/?depth=2";
-
+            var apiPathProperties =  "/apiv1/executiongroups/" + req.params.iserver + "/properties";
             var options = getOptions(inode[0], apiPath, 'GET');
+            var optionsProperties = getOptions(inode[0], apiPathProperties, 'GET');
 
             request(options, function(error, resp, body) {
                 if (error) res.status(404).send('Integration server not found');
-                else res.status(200).send(JSON.parse(body));
+                else {
+                    request(optionsProperties, function(er, response, properties) {
+                        var data = JSON.parse(body);
+                        
+                        if (!er) data.properties = JSON.parse(properties);
+
+                        res.status(200).send(data);
+                    })
+                    .auth(inode[0].username, inode[0].password, false);
+                }
             })
             .auth(inode[0].username, inode[0].password, false);
         });
@@ -148,11 +169,21 @@ module.exports = function(app, route) {
 
             //build the IIB api url
             var apiPath = "/apiv1/executiongroups/" + req.params.iserver + "/messageflows/" + req.params.messageflow;
+            var apiPathProperties = "/apiv1/executiongroups/" + req.params.iserver + "/messageflows/" + req.params.messageflow + "/properties";
             var options = getOptions(inode[0], apiPath, 'GET');
+            var optionsProperties = getOptions(inode[0], apiPathProperties, 'GET');
 
             request(options, function(error, resp, body) {
                 if (error) return status(404).send('Message flow not found');
-                else res.status(200).send(JSON.parse(body));
+                else {
+                    request(optionsProperties, function(er, response, properties) {
+                        var data = JSON.parse(body);
+
+                        if(!er) data.properties = JSON.parse(properties);
+                        res.status(200).send(data);
+                    })
+                    .auth(inode[0].username, inode[0].password, false);
+                }
             })
             .auth(inode[0].username, inode[0].password, false);
         });
@@ -171,12 +202,27 @@ module.exports = function(app, route) {
 
             // build the IIB api url
             var apiPath = "/apiv1/executiongroups/" + req.params.iserver + "/applications/" + req.params.application + "/?depth=2";
+            var apiPathProperties = "/apiv1/executiongroups/" + req.params.iserver + "/applications/" + req.params.application + "/properties";
             var options = getOptions(inode[0], apiPath, 'GET');
+            var optionsProperties = getOptions(inode[0], apiPathProperties, 'GET');
 
             request(options, function(error, resp, body) {
                 if (error) res.status(404).send('Application not found');
-                else res.status(200).send(JSON.parse(body));
-            });
+                else  {
+
+                    request(optionsProperties, function(er, resource, properties) {
+
+                        var data = JSON.parse(body);
+
+                        if (!er)
+                            data.properties = JSON.parse(properties);
+
+                        res.status(200).send(data);
+                    })
+                    .auth(inode[0].username, inode[0].password, false);
+                }
+            })
+            .auth(inode[0].username, inode[0].password, false);
         });
     });
 
@@ -193,11 +239,23 @@ module.exports = function(app, route) {
 
             // build the api url
             var apiPath = "/apiv1/executiongroups/" + req.params.iserver + "/applications/" + req.params.application + "/messageflows/" + req.params.messageflow;
+            var apiPathProperties = "/apiv1/executiongroups/" + req.params.iserver + "/applications/" + req.params.application + "/messageflows/" + req.params.messageflow + "/properties";
             var options = getOptions(inode[0], apiPath, 'GET');
+            var optionsProperties = getOptions(inode[0], apiPath, 'GET');
 
             request(options, function(error, resp, body) {
                 if (error) res.status(404).send('Message flow not found');
-                else res.status(200).send(JSON.parse(body));
+                else {
+                    request(optionsProperties, function(er, resource, properties) {
+                        var data = JSON.parse(body);
+
+                        if (!er)
+                            data.properties = JSON.parse(properties);
+                        
+                        res.status(200).send(data);
+                    })
+                    .auth(inode[0].username, inode[0].password, false);
+                }
             })
             .auth(inode[0].username, inode[0].password, false);
         });
@@ -267,7 +325,6 @@ module.exports = function(app, route) {
                                         "isRunning": responseString.executionGroups.executionGroup[j].messageFlows.messageFlow[i].isRunning,
                                         "size": Math.floor((Math.random() * 5000) + 100),
                                     };
-                                    console.log("      ---> " + "flow pushed");
                                     iserverData['children'].push(messageFlow);
                                     chartIndex++;
                                 }
@@ -292,17 +349,13 @@ module.exports = function(app, route) {
                                                 "isRunning": responseString.executionGroups.executionGroup[j].applications.application[i].messageFlows.messageFlow[k].isRunning,
                                                 "size": Math.floor((Math.random() * 5000) + 100)
                                             };
-                                            console.log("           --->> " + "flow pushed");
                                             application['children'].push(messageFlow);
                                         }
                                     }
-                                    console.log("      --->> " + "application pushed");
                                     iserverData['children'].push(application);
                                 }
-                                console.log(" ---> " + "iservers pushed");
                                 inodeData['children'].push(iserverData);
                             }
-                            console.log(inode.name + " pushed");
                             chartData['children'].push(inodeData);
                         }
 

@@ -31,21 +31,25 @@
 
             <div ng-class="{active:showResources}" class="details" style="width:90%;">
               <ul id="details" class="nav nav-tabs nav-justified">
-                <li role="presentation" class="active"><a data-target="#resources" aria-controls="resources" role="tab" data-toggle="tab">Resources</a></li>
-                <li role="presentation" ><a data-target="#details1" aria-controls="details1" role="tab" data-toggle="tab">Details1</a></li>
+                <li role="presentation" class="active"><a data-target="#resources" aria-controls="resources" role="tab" data-toggle="tab">Properties</a></li>
+                <li role="presentation" ><a data-target="#details1" aria-controls="details1" role="tab" data-toggle="tab">Components</a></li>
                 <li role="presentation" ><a data-target="#details2" aria-controls="details2" role="tab" data-toggle="tab">Details2</a></li>
 
                 <div class="tab-content">
                   <div role="tabpanel" class="tab-pane fade in active" id="resources">
+                    <h3><small><span ng-show="resourceLoading" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></small>{{ selectedElement }}</h3>
+                    <p ng-show="resource.type != 'inode'" ng-class="resource.isRunning ? 'text-success' : 'text-danger'"><strong>{{resource.isRunning ? 'Running' : 'Not running'}}</strong></p>
+                  </div>
+
+                  <div role="tabpanel" class="tab-pane fade" id="details1">
                     <h3><small><span ng-show="resourceLoading" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></small> {{ selectedElement }}</h3>
 
                     <ng-include ng-show="resource.type == 'inode'" src="'views/inode/inode-resource.html'"></ng-include>
                     <ng-include ng-show="resource.type == 'iserver'" src="'views/iserver/iserver-resource.html'"></ng-include>
                     <ng-include ng-show="resource.type == 'messageflow' || resource.type == 'applicationflow'" src="'views/messageflow/messageflow-resource.html'"></ng-include>
                     <ng-include ng-show="resource.type == 'application'" src="'views/application/application-resource.html'"></ng-include>
-
                   </div>
-                  <div role="tabpanel" class="tab-pane fade" id="details1"><h2>Details 1</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
+
                   <div role="tabpanel" class="tab-pane fade" id="details2"><h2>Details 2</h2><p>Placeholder text. This area will be populated with information about the selected item.</p></div>
                 </div>
               </ul>
