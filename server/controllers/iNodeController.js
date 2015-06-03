@@ -241,7 +241,7 @@ module.exports = function(app, route) {
             var apiPath = "/apiv1/executiongroups/" + req.params.iserver + "/applications/" + req.params.application + "/messageflows/" + req.params.messageflow;
             var apiPathProperties = "/apiv1/executiongroups/" + req.params.iserver + "/applications/" + req.params.application + "/messageflows/" + req.params.messageflow + "/properties";
             var options = getOptions(inode[0], apiPath, 'GET');
-            var optionsProperties = getOptions(inode[0], apiPath, 'GET');
+            var optionsProperties = getOptions(inode[0], apiPathProperties, 'GET');
 
             request(options, function(error, resp, body) {
                 if (error) res.status(404).send('Message flow not found');

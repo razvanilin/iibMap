@@ -46,7 +46,7 @@
                     <ng-include ng-show="resource.type == 'inode'" src="'views/inode/inode-properties.html'"></ng-include>
                     <ng-include ng-show="resource.type == 'iserver'" src="'views/iserver/iserver-properties.html'"></ng-include>
                     <ng-include ng-show="resource.type == 'application'" src="'views/application/application-properties.html'"></ng-include>
-                    <ng-include ng-show="resource.type == 'messageflow'" src="'views/messageflow/messageflow-properties.html'"></ng-include>
+                    <ng-include ng-show="resource.type == 'messageflow' || resource.type == 'applicationflow'" src="'views/messageflow/messageflow-properties.html'"></ng-include>
                   </div>
 
                   <div role="tabpanel" class="tab-pane fade" id="details1">
