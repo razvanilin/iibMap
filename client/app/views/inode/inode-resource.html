@@ -1,4 +1,4 @@
 <div class="col-md-12">
   <h4>Integration Servers</h4>
-  <p ng-class="iserver.isRunning ? 'text-success' : 'text-danger'" ng-repeat="iserver in resource.executionGroup | orderBy: '-isRunning'"><strong>{{iserver.name}}</strong></p>
+  <p style="text-align:center;" ng-class="iserver.isRunning ? 'text-success' : 'text-danger'" ng-repeat="iserver in resource.executionGroup | orderBy: '-isRunning'"><span class="label" ng-class="iserver.isRunning ? 'label-success' : 'label-danger'">{{iserver.name}}</span></p>
 </div>

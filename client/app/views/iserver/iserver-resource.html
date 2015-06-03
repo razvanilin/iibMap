@@ -1,8 +1,8 @@
 <div class="col-md-6" style="border-right: 1px solid">
   <h4>Message Flows</h4>
-  <p ng-class="messageflow.isRunning ? 'text-success' : 'text-danger'" ng-repeat="messageflow in resource.messageFlows.messageFlow | orderBy: '-isRunning'"><strong>{{messageflow.name}}</strong></p>
+  <p style="text-align: center;" ng-class="messageflow.isRunning ? 'text-success' : 'text-danger'" ng-repeat="messageflow in resource.messageFlows.messageFlow | orderBy: '-isRunning'"><span class="label" ng-class="messageflow.isRunning ? 'label-success' : 'label-danger'">{{messageflow.name}}</span></p>
 </div>
 <div class="col-md-6">
 	<h4>Applications</h4>
-	<p ng-class="application.isRunning ? 'text-success' : 'text-danger'" ng-repeat="application in resource.applications.application | orderBy: '-isRunning'"><strong>{{application.name}}</strong></p>
+	<p style="text-align: center;" ng-class="application.isRunning ? 'text-success' : 'text-danger'" ng-repeat="application in resource.applications.application | orderBy: '-isRunning'"><span class="label" ng-class="application.isRunning ? 'label-success' : 'label-danger'">{{application.name}}</span></p>
 </div>
