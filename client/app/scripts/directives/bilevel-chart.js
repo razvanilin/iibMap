@@ -325,7 +325,7 @@ var BilevelChart = Class.create({
         }
 
         function fill(d) {
-            if (!d.isRunning && d.type != "inode") return "#e00000";
+            if (d.isRunning == false) return "#e00000";
             var p = d;
             while (p.depth > 1) p = p.parent;
             var c = d3.lab(hue(p.name));
