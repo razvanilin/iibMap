@@ -32,7 +32,6 @@ var CircleChart = Class.create({
 
     generateGraph: function() {
 
-        console.log(this.datajson);
         var chartCtrl = this.chartCtrl;
 
         function chartSize() {
