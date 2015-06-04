@@ -2,6 +2,8 @@
 
 A map app for IIB built using the MEAN stack: MongoDB, ExpressJS, AngularJS and Node.js. The app is split into two, the server API and the Angular app.
 
+![alt tag](https://github.com/razvanilin/iibMap/blob/develop/demo.JPG)
+
 ## Dev Environment Set-Up ##
 
 ### Dependencies ###
