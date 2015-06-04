@@ -9,10 +9,11 @@
  */
 
  angular.module('iibHeatMapApp')
- 	.controller('ChartCtrl', function($scope, INode, ResourceDetails, CONFIG) {
+ 	.controller('ChartCtrl', function($scope, $routeParams, INode, ResourceDetails) {
  		$scope.resource = {};
  		$scope.selectedElement = "";
  		$scope.showResources = false;
+ 		$scope.chartType = $routeParams.type;
 
  		INode.one('topology').get().then(function(data) {
  			$scope.topology = data;

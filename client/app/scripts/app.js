@@ -33,6 +33,9 @@ angular
                 controller: 'MainCtrl'
             })
             .when('/chart', {
+                templateUrl: 'views/chart-view.html'
+            })
+            .when('/chart/:type', {
                 templateUrl: 'views/chart.html',
                 controller: 'ChartCtrl'
             })

@@ -11,8 +11,14 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li ng-class="{'active':viewChart}">
-              <a ng-href="#/chart"><span class="glyphicon glyphicon-th"></span> Chart View</a>
+            <li dropdown ng-class="{'active':viewChart}">
+              <a class="dropdown-toggle" dropdown-toggle href="">
+                <span class="glyphicon glyphicon-th"></span> Chart View
+              </a>
+              <ul class="dropdown-menu"role="menu">
+                <li><a ng-href="#/chart/circle">Circle Chart</a></li>
+                <li><a ng-href="#/chart/sunburst">Sunburst Chart</a></li>
+              </ul>
             </li>
             <li ng-class="{'active':viewHealth}">
               <a ng-href="#/health"><span class="glyphicon glyphicon-plus-sign"></span> Health</a>
@@ -21,7 +27,7 @@
 
           <ul class="nav navbar-nav navbar-right">
             <li dropdown ng-class="{'active':viewManage || viewAddNode || viewServices}">
-              <a class="dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+              <a class="dropdown-toggle" dropdown-toggle ng-disabled="disabled" href="">
               <span class="glyphicon glyphicon-cog"></span>  Manage <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
