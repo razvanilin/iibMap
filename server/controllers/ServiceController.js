@@ -16,8 +16,8 @@ module.exports = function(app, route) {
     Service.register(app, route);
 
     /*
-     *	GET a list with the services and their health
-     *	The health is determined by the status (running or not) of the flows contained in the service
+     *  GET a list with the services and their health
+     *  The health is determined by the status (running or not) of the flows contained in the service
      */
     app.get(config.apiRoute + "/service/health", function(req, res, next) {
         Service.find({
@@ -35,7 +35,7 @@ module.exports = function(app, route) {
     /*
      * Change the status of the service (active or not)
      */
-    app.put(config.apiRoute+'/service/:id/status', function(req, res, next) {
+    app.put(config.apiRoute + '/service/:id/status', function(req, res, next) {
         Service.findOne({
             _id: req.params.id
         }).exec(function(err, service) {
@@ -44,9 +44,9 @@ module.exports = function(app, route) {
             service.isActive = req.body.isActive;
 
             service.save(function(err) {
-                if(err) {
+                if (err) {
                     return res.status(400).send('The Service was not updated');
-                } 
+                }
                 return res.status(200).send('The Service was updated');
             });
         });
@@ -56,19 +56,19 @@ module.exports = function(app, route) {
     var servicesHealth = [];
 
     /*
-     *	Function that takes a service and gets the health of each flow inside it
-     *	To get the health, it's using an async map to make requests to the IIB API for each flow
+     *  Function that takes a service and gets the health of each flow inside it
+     *  To get the health, it's using an async map to make requests to the IIB API for each flow
      *
-     *	The service is:
-     * 		healthy 	- if all the flows are running
-     *		problematic - if at least one flow is not running and the rest are
-     *		not healthy - if all the flows are not running
+     *  The service is:
+     *      healthy     - if all the flows are running
+     *      problematic - if at least one flow is not running and the rest are
+     *      not healthy - if all the flows are not running
      *
      */
     function getHealth(service, numberOfServices, res) {
 
-    	var flowIndex = 1;
-    	var validJson = false;
+        var flowIndex = 1;
+        var validJson = false;
         var flowHealth = [];
         var apiBasePath = "/apiv1";
 
@@ -84,68 +84,72 @@ module.exports = function(app, route) {
             // query the database to get the node details (hostname, port, user, pw)
             // necessary for the request
             INode.findOne({
-                isActive: true,
                 _id: flow.inode
             }).exec(function(err, inode) {
                 if (err) return res.status(400).send("Error when retrieving the Integration Node");
-                var options = getOptions(inode, apiPath, 'GET');
+                //if (inode !== null) {
+                    var options = getOptions(inode, apiPath, 'GET');
 
-                // Make a request to the IIB API the get the flow status
-                request(options, function(error, resp, body) {
-                        var responseString;
-                        try {
-                            responseString = JSON.parse(body);
-                            validJson = true;
-                        } catch (jsonErr) {
-                            validJson = false;
-                        }
 
-                        if (validJson) {
-                            flowHealth.push(responseString.isRunning);
-                        }
-
-                        if (flowIndex == service.flows.length) {
-                            console.log("async test 2");
-                            var badHealth = 0;
-                            for (var j = 0; j < flowHealth.length; j++) {
-                                if (!flowHealth[j]) badHealth++;
+                    // Make a request to the IIB API the get the flow status
+                    request(options, function(error, resp, body) {
+                            var responseString;
+                            try {
+                                responseString = JSON.parse(body);
+                                validJson = true;
+                            } catch (jsonErr) {
+                                validJson = false;
                             }
 
-                            if (badHealth == 0 && flowHealth.length > 1) {
-                                servicesHealth.push({
-                                    name: service.name,
-                                    health: 2
-                                });
-                            } else if (badHealth > 0 && badHealth < flowHealth.length) {
-                                servicesHealth.push({
-                                    name: service.name,
-                                    health: 1
-                                });
-                            } else {
-                                servicesHealth.push({
-                                    name: service.name,
-                                    health: 0
-                                });
+                            if (validJson) {
+                                flowHealth.push(responseString.isRunning);
                             }
-                            console.log(servicesHealth);
-                            flowIndex = 1;
-                            
-                        }
-                        callback();
-                        flowIndex++;
-                    })
-                    // authenticate the request
-                    .auth(inode.username, inode.password, false);
-                console.log("async test 1");
+
+                            if (flowIndex == service.flows.length) {
+                                console.log("async test 2");
+                                var badHealth = 0;
+                                for (var j = 0; j < flowHealth.length; j++) {
+                                    if (!flowHealth[j]) badHealth++;
+                                }
+
+                                if (badHealth == 0 && flowHealth.length > 1) {
+                                    servicesHealth.push({
+                                        name: service.name,
+                                        health: 2
+                                    });
+                                } else if (badHealth > 0 && badHealth < flowHealth.length) {
+                                    servicesHealth.push({
+                                        name: service.name,
+                                        health: 1
+                                    });
+                                } else {
+                                    servicesHealth.push({
+                                        name: service.name,
+                                        health: 0
+                                    });
+                                }
+                                console.log(servicesHealth);
+                                flowIndex = 1;
+
+                            }
+                            callback();
+                            flowIndex++;
+                        })
+                        // authenticate the request
+                        .auth(inode.username, inode.password, false);
+                    console.log("async test 1");
+               // } else {
+               //     callback();
+               // }
             });
             console.log("end");
         }, function() {
             servicesChecked++;
             console.log(servicesChecked + " > " + numberOfServices);
             if (numberOfServices == servicesChecked) {
-            	servicesChecked = 0;
-            	var finalHealth = servicesHealth;
-            	servicesHealth = [];
+                servicesChecked = 0;
+                var finalHealth = servicesHealth;
+                servicesHealth = [];
                 return res.send(finalHealth);
             }
         });
