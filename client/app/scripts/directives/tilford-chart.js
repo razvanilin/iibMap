@@ -109,7 +109,7 @@ var TilfordChart = Class.create({
 
         function fill(d) {
             if (d.isRunning == false) return "#e00000";
-            return "white";
+            return "black";
         }
 
         function click(d) {

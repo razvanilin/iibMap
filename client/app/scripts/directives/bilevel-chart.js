@@ -154,7 +154,8 @@ var BilevelChart = Class.create({
             .attr("dy", ".35em") // vertical-align
             .html(function(d) {
                 return d.name;
-            });
+            })
+            .on('click', zoomIn);
 
         function zoomIn(d) {
             if (d.type == "inode") {
@@ -288,6 +289,7 @@ var BilevelChart = Class.create({
             text.transition().duration(750).attr("opacity", 0);
 
             text.enter().append("text")
+                .on('click', zoomIn)
                 .attr("class", "sun-label")
                 .transition().duration(750)
                 .attr("transform", function(d) {
@@ -301,6 +303,7 @@ var BilevelChart = Class.create({
                 .text(function(d) {
                     return d.name;
                 });
+
 
             text.exit().transition().duration(750)
                 .attr("opacity", 0);

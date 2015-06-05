@@ -3,7 +3,8 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-@import url(http://fonts.googleapis.com/css?family=Dosis:500);
+/*@import url(http://fonts.googleapis.com/css?family=Dosis:500);*/
+@import url(http://fonts.googleapis.com/css?family=Titillium+Web);
 
 .browsehappy {
   margin: 0.2em 0;
@@ -98,7 +99,7 @@ body {
 
 body {
   background: #000021;
-  font: normal 18px Dosis; color: white; text-align: center;
+  font: normal 18px 'Titillium Web'; color: white; text-align: center;
 }
 
 h3 {

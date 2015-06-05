@@ -141,6 +141,21 @@ var SunburstChart = Class.create({
             .attr("dy", ".35em") // vertical-align
             .text(function(d) {
                 return d.name;
+            })
+            .on("click", function(d) {
+                // check the type of the clicked element and call the getResources() method inside the chart controller
+                if (d.type == "inode") {
+                    chartCtrl.getResources(d.id, null, null, null, d.type, d.name);
+                } else if (d.type == "iserver") {
+                    chartCtrl.getResources(d.parent.id, d.name, null, null, d.type, d.name);
+                } else if (d.type == "messageflow") {
+                    chartCtrl.getResources(d.parent.parent.id, d.parent.name, null, d.name, d.type, d.name);
+                } else if (d.type == "application") {
+                    chartCtrl.getResources(d.parent.parent.id, d.parent.name, d.name, null, d.type, d.name);
+                } else if (d.type == "applicationflow") {
+                    chartCtrl.getResources(d.parent.parent.parent.id, d.parent.parent.name, d.parent.name, d.name, d.type, d.name);
+                }
+                click(d);
             });
 
         function click(d) {
