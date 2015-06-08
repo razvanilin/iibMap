@@ -16,6 +16,7 @@
     "lodash": "^3.6.0",
     "method-override": "^2.3.2",
     "mongoose": "3.9.7",
+    "mongoose-timestamp": "^0.4.0",
     "morgan": "~1.5.1",
     "node-restful": "^0.1.18",
     "request": "^2.55.0",

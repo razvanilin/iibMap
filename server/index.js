@@ -46,7 +46,7 @@ if (process.env.VCAP_SERVICES) {
     dbHost = app.config.dbhost;
 }
 
-var port = process.env.VCAP_APP_PORT || 8080;
+var port = process.env.VCAP_APP_PORT || app.config.port;
 
 mongoose.connect(dbHost);
 mongoose.connection.once('open', function() {

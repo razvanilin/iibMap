@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var timestamps = require('mongoose-timestamp');
 
 var ServiceSchema = new mongoose.Schema({
 	name: {
@@ -29,5 +30,7 @@ var ServiceSchema = new mongoose.Schema({
 		default: true
 	}
 });
+
+ServiceSchema.plugin(timestamps);
 
 module.exports = ServiceSchema;

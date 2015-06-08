@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var timestamps = require('mongoose-timestamp');
 
 var INodeSchema = new mongoose.Schema({
 	name: {
@@ -30,5 +31,7 @@ var INodeSchema = new mongoose.Schema({
 		default: true
 	}
 });
+
+INodeSchema.plugin(timestamps);
 
 module.exports = INodeSchema;
