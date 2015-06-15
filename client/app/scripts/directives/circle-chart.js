@@ -1,38 +1,58 @@
 angular.module('iibHeatMapApp')
-    .directive('circleChart', function($parse, $window, $compile) {
+    .directive('circleChart', function($parse, $window, $timeout) {
         return {
             restrict: 'A',
             scope: {
-                datajson: '='
+                datajson: '=',
+                getResources: '&getResources'
             },
-            require: '^ngController',
+            //require: '^ngController',
             link: function(scope, elem, attrs, Ctrl) {
 
+                /* Callback used to get the properties of the clicked elements
+                 * This is called on the D3 click event
+                 */
+                var getResources = function(inodeId, iserver, application, messageflow, type, name) {
+                    scope.getResources({
+                        inodeId: inodeId,
+                        iserver: iserver,
+                        application: application,
+                        messageflow: messageflow,
+                        type: type,
+                        name: name
+                    });
+                };
+
                 var circleChart = new CircleChart(scope.datajson);
-                circleChart.initialise(scope.datajson, Ctrl);
-                var svg = circleChart.generateGraph();
+                circleChart.initialise(scope.datajson);
+                var svg = circleChart.generateGraph(getResources);
                 svg = angular.element(svg);
-                //scope.isLoading = true;
 
-                //scope.$apply(function() {
-                  //var content = $compile(svg)(scope);
-                  //elem.append(svg);
-                //});
-
-                //$compile(elem.contents())(scope);
             }
         }
     });
 
+
+
 var CircleChart = Class.create({
-    initialise: function(datajson, ChartCtrl) {
+    initialise: function(datajson) {
         this.datajson = datajson;
-        this.chartCtrl = ChartCtrl;
+        this.inodeId = null;
     },
 
-    generateGraph: function() {
+    getResources: function() {
+        return {
+            inodeId: this.inodeId,
+            iserver: this.iserver,
+            application: this.application,
+            messageflow: this.messageflow,
+            type: this.type,
+            name: this.name
+        };
+    },
 
-        var chartCtrl = this.chartCtrl;
+    generateGraph: function(getResources) {
+        var chart = this;
 
         function chartSize() {
             return (($(document).width() + $(document).height()) / 2) / 1.8;
@@ -114,15 +134,16 @@ var CircleChart = Class.create({
             .on("click", function(d) {
                 // check the type of the clicked element and call the getResources() method inside the chart controller
                 if (d.type == "inode") {
-                    chartCtrl.getResources(d.id, null, null, null, d.type, d.name);
+                    //console.log(this.getResources);
+                    getResources(d.id, null, null, null, d.type, d.name);
                 } else if (d.type == "iserver") {
-                    chartCtrl.getResources(d.parent.id, d.name, null, null, d.type, d.name);
+                    getResources(d.parent.id, d.name, null, null, d.type, d.name);
                 } else if (d.type == "messageflow") {
-                    chartCtrl.getResources(d.parent.parent.id, d.parent.name, null, d.name, d.type, d.name);
-                } else  if (d.type == "application") {
-                    chartCtrl.getResources(d.parent.parent.id, d.parent.name, d.name, null, d.type, d.name);
+                    getResources(d.parent.parent.id, d.parent.name, null, d.name, d.type, d.name);
+                } else if (d.type == "application") {
+                    getResources(d.parent.parent.id, d.parent.name, d.name, null, d.type, d.name);
                 } else if (d.type == "applicationflow") {
-                    chartCtrl.getResources(d.parent.parent.parent.id, d.parent.parent.name, d.parent.name, d.name, d.type, d.name);
+                    getResources(d.parent.parent.parent.id, d.parent.parent.name, d.parent.name, d.name, d.type, d.name);
                 }
                 if (focus !== d) zoom(d), d3.event.stopPropagation();
             });
@@ -142,10 +163,6 @@ var CircleChart = Class.create({
             .text(function(d) {
                 return d.name;
             });
-
-        /*d3.select("#flow1").style({
-            "fill": "white"
-        });*/
 
 
         var node = svg.selectAll("circle,text");
@@ -207,5 +224,14 @@ var CircleChart = Class.create({
 
         d3.select(self.frameElement).style("height", diameter + "px");
         return $('#chart-content').prop('outerHTML');
+
+        function setAttr(inode, iserver, application, messageflow, type, name) {
+            this.inode = inode;
+            this.iserver = iserver;
+            this.application = application;
+            this.messageflow = messageflow;
+            this.type = type;
+            this.name = name;
+        }
     }
 });

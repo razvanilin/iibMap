@@ -5,7 +5,7 @@
         <!-- CHART DIRECTIVES -->
         <div ng-if="topology && chartType == 'sunburst'" class="col-md-7" id="chart-content" sunburst-chart datajson="topology"></div>
 
-        <div ng-if="topology && chartType == 'circle'" class="col-md-7" id="chart-content" circle-chart datajson="topology"></div>
+        <div ng-if="topology && chartType == 'circle'" class="col-md-7" id="chart-content" circle-chart datajson="topology" get-resources="getResources(inodeId, iserver, application, messageflow, type, name)"></div>
 
         <div ng-if="topology && chartType =='bilevel'" class="col-md-7" id="chart-content" bilevel-chart datajson="topology"></div>
 

@@ -12,7 +12,7 @@ angular.module('iibHeatMapApp')
                 sunburstChart.initialise(scope.datajson, Ctrl);
                 var svg = sunburstChart.generateGraph();
                 svg = angular.element(svg);
-                console.log("yo");
+
             }
         }
     });
