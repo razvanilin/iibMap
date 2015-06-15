@@ -1,38 +1,3 @@
-angular.module('iibHeatMapApp')
-    .directive('circleChart', function($parse, $window, $timeout) {
-        return {
-            restrict: 'A',
-            scope: {
-                datajson: '=',
-                getResources: '&getResources'
-            },
-            link: function(scope, elem, attrs, Ctrl) {
-
-                /* Callback used to get the properties of the clicked elements
-                 * This is called on the D3 click event
-                 */
-                var getResources = function(inodeId, iserver, application, messageflow, type, name) {
-                    scope.getResources({
-                        inodeId: inodeId,
-                        iserver: iserver,
-                        application: application,
-                        messageflow: messageflow,
-                        type: type,
-                        name: name
-                    });
-                };
-
-                var circleChart = new CircleChart(scope.datajson);
-                circleChart.initialise(scope.datajson);
-                var svg = circleChart.generateGraph(getResources);
-                svg = angular.element(svg);
-
-            }
-        }
-    });
-
-
-
 var CircleChart = Class.create({
     initialise: function(datajson) {
         this.datajson = datajson;
@@ -40,7 +5,6 @@ var CircleChart = Class.create({
     },
 
     generateGraph: function(getResources) {
-        var chart = this;
 
         function chartSize() {
             return (($(document).width() + $(document).height()) / 2) / 1.8;

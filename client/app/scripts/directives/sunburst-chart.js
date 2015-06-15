@@ -1,31 +1,9 @@
-angular.module('iibHeatMapApp')
-    .directive('sunburstChart', function($parse, $window, $compile) {
-        return {
-            restrict: 'A',
-            scope: {
-                datajson: '='
-            },
-            require: '^ngController',
-            link: function(scope, elem, attrs, Ctrl) {
-
-                var sunburstChart = new SunburstChart(scope.datajson);
-                sunburstChart.initialise(scope.datajson, Ctrl);
-                var svg = sunburstChart.generateGraph();
-                svg = angular.element(svg);
-
-            }
-        }
-    });
-
 var SunburstChart = Class.create({
-    initialise: function(datajson, ChartCtrl) {
+    initialise: function(datajson) {
         this.datajson = datajson;
-        this.chartCtrl = ChartCtrl;
     },
 
-    generateGraph: function() {
-
-        var chartCtrl = this.chartCtrl;
+    generateGraph: function(getResources) {
 
         function chartSize() {
             return (($(document).width() + $(document).height()) / 2) / 1.8;
@@ -114,18 +92,6 @@ var SunburstChart = Class.create({
                 }
             })
             .on("click", function(d) {
-                // check the type of the clicked element and call the getResources() method inside the chart controller
-                if (d.type == "inode") {
-                    chartCtrl.getResources(d.id, null, null, null, d.type, d.name);
-                } else if (d.type == "iserver") {
-                    chartCtrl.getResources(d.parent.id, d.name, null, null, d.type, d.name);
-                } else if (d.type == "messageflow") {
-                    chartCtrl.getResources(d.parent.parent.id, d.parent.name, null, d.name, d.type, d.name);
-                } else if (d.type == "application") {
-                    chartCtrl.getResources(d.parent.parent.id, d.parent.name, d.name, null, d.type, d.name);
-                } else if (d.type == "applicationflow") {
-                    chartCtrl.getResources(d.parent.parent.parent.id, d.parent.parent.name, d.parent.name, d.name, d.type, d.name);
-                }
                 click(d);
             });
 
@@ -143,24 +109,26 @@ var SunburstChart = Class.create({
                 return d.name;
             })
             .on("click", function(d) {
-                // check the type of the clicked element and call the getResources() method inside the chart controller
-                if (d.type == "inode") {
-                    chartCtrl.getResources(d.id, null, null, null, d.type, d.name);
-                } else if (d.type == "iserver") {
-                    chartCtrl.getResources(d.parent.id, d.name, null, null, d.type, d.name);
-                } else if (d.type == "messageflow") {
-                    chartCtrl.getResources(d.parent.parent.id, d.parent.name, null, d.name, d.type, d.name);
-                } else if (d.type == "application") {
-                    chartCtrl.getResources(d.parent.parent.id, d.parent.name, d.name, null, d.type, d.name);
-                } else if (d.type == "applicationflow") {
-                    chartCtrl.getResources(d.parent.parent.parent.id, d.parent.parent.name, d.parent.name, d.name, d.type, d.name);
-                }
                 click(d);
             });
 
         function click(d) {
             // fade out all text elements
             text.attr("opacity", 0);
+            text.attr("z-index", -1);
+
+            // check the type of the clicked element and call the getResources() method inside the chart controller
+            if (d.type == "inode") {
+                getResources(d.id, null, null, null, d.type, d.name);
+            } else if (d.type == "iserver") {
+                getResources(d.parent.id, d.name, null, null, d.type, d.name);
+            } else if (d.type == "messageflow") {
+                getResources(d.parent.parent.id, d.parent.name, null, d.name, d.type, d.name);
+            } else if (d.type == "application") {
+                getResources(d.parent.parent.id, d.parent.name, d.name, null, d.type, d.name);
+            } else if (d.type == "applicationflow") {
+                getResources(d.parent.parent.parent.id, d.parent.parent.name, d.parent.name, d.name, d.type, d.name);
+            }
 
             path.transition()
                 .duration(750)
@@ -173,6 +141,7 @@ var SunburstChart = Class.create({
                         // fade in the text element and recalculate positions
                         arcText.transition().duration(750)
                             .attr("opacity", 1)
+                            .attr("z-index", 1)
                             .attr("transform", function() {
                                 return "rotate(" + computeTextRotation(e) + ")"
                             })

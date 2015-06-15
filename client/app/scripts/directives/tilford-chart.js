@@ -1,31 +1,9 @@
-angular.module('iibHeatMapApp')
-    .directive('tilfordChart', function($parse, $window, $compile) {
-        return {
-            restrict: 'A',
-            scope: {
-                datajson: '='
-            },
-            require: '^ngController',
-            link: function(scope, elem, attrs, Ctrl) {
-
-                var tilfordChart = new TilfordChart(scope.datajson);
-                tilfordChart.initialise(scope.datajson, Ctrl);
-                var svg = tilfordChart.generateGraph();
-                svg = angular.element(svg);
-                console.log("yo");
-            }
-        }
-    });
-
 var TilfordChart = Class.create({
-    initialise: function(datajson, ChartCtrl) {
+    initialise: function(datajson) {
         this.datajson = datajson;
-        this.chartCtrl = ChartCtrl;
     },
 
     generateGraph: function() {
-
-        var chartCtrl = this.chartCtrl;
 
         function chartSize() {
             return (($(document).width() + $(document).height()) / 2) / 1.8;
@@ -114,15 +92,15 @@ var TilfordChart = Class.create({
 
         function click(d) {
             if (d.type == "inode") {
-                chartCtrl.getResources(d.id, null, null, null, d.type, d.name);
+                getResources(d.id, null, null, null, d.type, d.name);
             } else if (d.type == "iserver") {
-                chartCtrl.getResources(d.parent.id, d.name, null, null, d.type, d.name);
+                getResources(d.parent.id, d.name, null, null, d.type, d.name);
             } else if (d.type == "messageflow") {
-                chartCtrl.getResources(d.parent.parent.id, d.parent.name, null, d.name, d.type, d.name);
+                getResources(d.parent.parent.id, d.parent.name, null, d.name, d.type, d.name);
             } else if (d.type == "application") {
-                chartCtrl.getResources(d.parent.parent.id, d.parent.name, d.name, null, d.type, d.name);
+                getResources(d.parent.parent.id, d.parent.name, d.name, null, d.type, d.name);
             } else if (d.type == "applicationflow") {
-                chartCtrl.getResources(d.parent.parent.parent.id, d.parent.parent.name, d.parent.name, d.name, d.type, d.name);
+                getResources(d.parent.parent.parent.id, d.parent.parent.name, d.parent.name, d.name, d.type, d.name);
             }
         }
 
