@@ -3,7 +3,7 @@ var TilfordChart = Class.create({
         this.datajson = datajson;
     },
 
-    generateGraph: function() {
+    generateGraph: function(getResources) {
 
         function chartSize() {
             return (($(document).width() + $(document).height()) / 2) / 1.8;
