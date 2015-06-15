@@ -23,7 +23,9 @@ angular.module('iibHeatMapApp')
                     });
                 };
 
+                // instantiate a new chart depending on the type specified in the template
                 var circleChart = Charts[scope.chartType];
+
 
                 circleChart.initialise(scope.datajson);
                 var svg = circleChart.generateGraph(getResources);
