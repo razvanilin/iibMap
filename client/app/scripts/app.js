@@ -86,11 +86,4 @@ angular
     })
     .factory('Service', function(ServiceRestangular, CONFIG) {
         return ServiceRestangular.service(CONFIG.API_ROUTE + '/service');
-    })
-    .factory('ResourceDetails', function() {
-        var resource = {
-            resource: {}
-        };
-
-        return resource;
     });

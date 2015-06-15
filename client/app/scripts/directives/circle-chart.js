@@ -6,7 +6,6 @@ angular.module('iibHeatMapApp')
                 datajson: '=',
                 getResources: '&getResources'
             },
-            //require: '^ngController',
             link: function(scope, elem, attrs, Ctrl) {
 
                 /* Callback used to get the properties of the clicked elements
@@ -38,17 +37,6 @@ var CircleChart = Class.create({
     initialise: function(datajson) {
         this.datajson = datajson;
         this.inodeId = null;
-    },
-
-    getResources: function() {
-        return {
-            inodeId: this.inodeId,
-            iserver: this.iserver,
-            application: this.application,
-            messageflow: this.messageflow,
-            type: this.type,
-            name: this.name
-        };
     },
 
     generateGraph: function(getResources) {
@@ -84,7 +72,6 @@ var CircleChart = Class.create({
             .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
         var root = this.datajson;
-        //if (error) return console.error(error);
 
         // check if there was an error response from the server
         if (root['code']) {
