@@ -10,6 +10,8 @@ A map app for IIB built using the MEAN stack: MongoDB, ExpressJS, AngularJS and 
 
 * Node.js and NPM
 
+https://nodejs.org/
+
 ```
 
 sudo apt-get install nodejs
@@ -39,8 +41,11 @@ sudo npm install -g bower
 sudo npm install -g yo
 ```
 
-* Install compass gem
+* Install ruby and compass gem
 
+ruby: https://www.ruby-lang.org/en/documentation/installation/
+
+After installing ruby:
 ```
 gem install compass
 ```
@@ -56,7 +61,7 @@ git clone https://github.com/razvanilin/iibMap.git
 * Navigate to the project folder and begin setup
 
 ```
-cd iibHeatMapApp/
+cd iibMap/
 cd server/
 npm install
 
@@ -88,7 +93,7 @@ connect: {
       },
 ```
 
-* Connect the Angular app to the server API (client/app/app.js)
+* Connect the Angular app to the server API (client/app/scripts/app.js)
 
 ```
 .constant("CONFIG", {
@@ -103,7 +108,7 @@ connect: {
 * Create and start the database
 
 ```
-mongod
+mongod --dbpath /path_where_you_want_to_place_your_database
 
 mongo
 use heatmap
