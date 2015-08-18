@@ -162,4 +162,4 @@ grunt build
 cd server/
 node index
 ```
-### That's it, you should be able to go to yourawesomewebsite.com and play with the applicaiton ###
+### That's it, you should be able to go to yourawesomewebsite.com and play with the application ###
